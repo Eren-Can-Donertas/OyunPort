@@ -1,0 +1,24 @@
+PASS  Sağlık: nginx -> backend -> PostgreSQL  — 200 {'status': 'UP', 'customerPool': {'database': 'oyunport', 'dbRole': 'app_customer', 'serverVersion': '16.14'}, 'adminPool': {'dbRole': 'app_admin'}, 'visibleCatalogProducts': 4884}
+PASS  React SPA nginx üzerinden sunuluyor (index.html + JS paketi)  — /assets/index-Ulpx63uR.js
+PASS  Giriş: sentetik demo müşteri  — 200
+PASS  Katalog araması (gerçek veri)  — total=3906
+PASS  Ürün detayı
+PASS  Sepet doğrulaması  — total=49.99
+PASS  T1: PENDING sipariş  — 201
+PASS  T2: başarısız ödeme FAILED kaydı, sipariş PENDING
+PASS  T2: başarılı ödeme -> COMPLETED + kütüphane
+PASS  Idempotency: aynı request_key önceki sonucu döndürür
+PASS  Sipariş geçmişi: FAILED + SUCCESS denemeleri saklı
+PASS  BR02: sahip olunan ürün tekrar satın alınamaz  — 409 [BR02] Bu ürünlere zaten sahipsiniz: Neon Sınır #20
+PASS  Oynama oturumu kaydı (ana oyun)
+PASS  Yorum ekleme (sahip olunan ana oyun)
+PASS  Müşteri admin raporuna erişemez (403)
+PASS  Admin rapor overview  — 1 satır, 181 ms
+PASS  Admin rapor q1  — 36 satır, 870 ms
+PASS  Admin rapor q2  — 90 satır, 352 ms
+PASS  Admin rapor q3  — 100 satır, 539 ms
+PASS  Admin rapor q4  — 50 satır, 1057 ms
+PASS  Admin rapor q5  — 50 satır, 686 ms
+PASS  Admin canlı EXPLAIN (ANALYZE, BUFFERS)  — 789.092 ms
+
+Toplam 22 kontrol: 22 PASS, 0 FAIL

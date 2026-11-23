@@ -1,0 +1,312 @@
+# deney=ix4b_q4_low_playtime indeks=ix_play_session_library_started aşama=without  tarih=2026-11-23T15:04:43+02:00
+# sorgu dosyası: perf/queries/ix4b_q4_low_playtime.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                                                                                                    QUERY PLAN                                                                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=154004.95..154005.07 rows=50 width=109) (actual time=1384.436..1384.445 rows=50 loops=1)
+   Buffers: shared hit=12532, temp read=3470 written=6965
+   I/O Timings: temp read=4.107 write=16.179
+   ->  Sort  (cost=154004.95..154009.12 rows=1667 width=109) (actual time=1367.544..1367.551 rows=50 loops=1)
+         Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((COALESCE(sum(EXTRACT(epoch FROM (ps.ended_at - ps.started_at))) FILTER (WHERE (ps.ended_at IS NOT NULL)), '0'::numeric)) < '3600'::numeric)))::numeric) / (count(*))::numeric), 2)) DESC, ((count(*))::integer) DESC
+         Sort Method: top-N heapsort  Memory: 35kB
+         Buffers: shared hit=12532, temp read=3470 written=6965
+         I/O Timings: temp read=4.107 write=16.179
+         ->  HashAggregate  (cost=153837.06..153949.57 rows=1667 width=109) (actual time=1364.342..1366.784 rows=3835 loops=1)
+               Group Key: p.product_id
+               Filter: (count(*) >= 20)
+               Batches: 1  Memory Usage: 2257kB
+               Rows Removed by Filter: 71
+               Buffers: shared hit=12526, temp read=3470 written=6965
+               I/O Timings: temp read=4.107 write=16.179
+               ->  Hash Join  (cost=122488.51..147237.24 rows=527986 width=69) (actual time=1000.525..1301.612 rows=441836 loops=1)
+                     Hash Cond: (le.product_id = p.product_id)
+                     Buffers: shared hit=12526, temp read=3470 written=6965
+                     I/O Timings: temp read=4.107 write=16.179
+                     ->  HashAggregate  (cost=122277.01..140358.74 rows=527986 width=48) (actual time=999.596..1252.108 rows=441836 loops=1)
+                           Group Key: le.library_id
+                           Planned Partitions: 8  Batches: 9  Memory Usage: 32849kB  Disk Usage: 31656kB
+                           Buffers: shared hit=12427, temp read=3470 written=6965
+                           I/O Timings: temp read=4.107 write=16.179
+                           ->  Hash Right Join  (cost=21653.65..51154.84 rows=839819 width=32) (actual time=170.431..604.119 rows=1177418 loops=1)
+                                 Hash Cond: (ps.library_id = le.library_id)
+                                 Buffers: shared hit=12427
+                                 ->  Seq Scan on play_session ps  (cost=0.00..17353.00 rows=1000000 width=24) (actual time=0.008..40.911 rows=1000000 loops=1)
+                                       Buffers: shared hit=7353
+                                 ->  Hash  (cost=15991.00..15991.00 rows=453012 width=16) (actual time=169.061..169.064 rows=441836 loops=1)
+                                       Buckets: 524288  Batches: 1  Memory Usage: 24808kB
+                                       Buffers: shared hit=5074
+                                       ->  Hash Join  (cost=122.00..15991.00 rows=453012 width=16) (actual time=0.586..110.913 rows=441836 loops=1)
+                                             Hash Cond: (le.product_id = bg.product_id)
+                                             Buffers: shared hit=5074
+                                             ->  Seq Scan on library_entry le  (cost=0.00..14481.78 rows=527986 width=16) (actual time=0.015..64.800 rows=528304 loops=1)
+                                                   Filter: (acquired_at <= (now() - '30 days'::interval))
+                                                   Rows Removed by Filter: 11112
+                                                   Buffers: shared hit=5042
+                                             ->  Hash  (cost=72.00..72.00 rows=4000 width=8) (actual time=0.545..0.546 rows=4000 loops=1)
+                                                   Buckets: 4096  Batches: 1  Memory Usage: 189kB
+                                                   Buffers: shared hit=32
+                                                   ->  Seq Scan on base_game bg  (cost=0.00..72.00 rows=4000 width=8) (actual time=0.014..0.235 rows=4000 loops=1)
+                                                         Buffers: shared hit=32
+                     ->  Hash  (cost=149.00..149.00 rows=5000 width=37) (actual time=0.890..0.891 rows=5000 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 405kB
+                           Buffers: shared hit=99
+                           ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=37) (actual time=0.012..0.323 rows=5000 loops=1)
+                                 Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=469
+ Planning Time: 3.722 ms
+ JIT:
+   Functions: 42
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.679 ms, Inlining 0.000 ms, Optimization 0.686 ms, Emission 19.539 ms, Total 21.903 ms
+ Execution Time: 1405.859 ms
+(57 rows)
+
+## koşu 2
+                                                                                                                                    QUERY PLAN                                                                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=154004.95..154005.07 rows=50 width=109) (actual time=1364.814..1364.822 rows=50 loops=1)
+   Buffers: shared hit=12532, temp read=3470 written=6965
+   I/O Timings: temp read=4.070 write=15.360
+   ->  Sort  (cost=154004.95..154009.12 rows=1667 width=109) (actual time=1352.134..1352.140 rows=50 loops=1)
+         Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((COALESCE(sum(EXTRACT(epoch FROM (ps.ended_at - ps.started_at))) FILTER (WHERE (ps.ended_at IS NOT NULL)), '0'::numeric)) < '3600'::numeric)))::numeric) / (count(*))::numeric), 2)) DESC, ((count(*))::integer) DESC
+         Sort Method: top-N heapsort  Memory: 35kB
+         Buffers: shared hit=12532, temp read=3470 written=6965
+         I/O Timings: temp read=4.070 write=15.360
+         ->  HashAggregate  (cost=153837.06..153949.57 rows=1667 width=109) (actual time=1348.910..1351.379 rows=3835 loops=1)
+               Group Key: p.product_id
+               Filter: (count(*) >= 20)
+               Batches: 1  Memory Usage: 2257kB
+               Rows Removed by Filter: 71
+               Buffers: shared hit=12526, temp read=3470 written=6965
+               I/O Timings: temp read=4.070 write=15.360
+               ->  Hash Join  (cost=122488.51..147237.24 rows=527986 width=69) (actual time=984.603..1286.776 rows=441836 loops=1)
+                     Hash Cond: (le.product_id = p.product_id)
+                     Buffers: shared hit=12526, temp read=3470 written=6965
+                     I/O Timings: temp read=4.070 write=15.360
+                     ->  HashAggregate  (cost=122277.01..140358.74 rows=527986 width=48) (actual time=983.684..1238.193 rows=441836 loops=1)
+                           Group Key: le.library_id
+                           Planned Partitions: 8  Batches: 9  Memory Usage: 32849kB  Disk Usage: 31656kB
+                           Buffers: shared hit=12427, temp read=3470 written=6965
+                           I/O Timings: temp read=4.070 write=15.360
+                           ->  Hash Right Join  (cost=21653.65..51154.84 rows=839819 width=32) (actual time=182.312..600.584 rows=1177418 loops=1)
+                                 Hash Cond: (ps.library_id = le.library_id)
+                                 Buffers: shared hit=12427
+                                 ->  Seq Scan on play_session ps  (cost=0.00..17353.00 rows=1000000 width=24) (actual time=0.008..40.407 rows=1000000 loops=1)
+                                       Buffers: shared hit=7353
+                                 ->  Hash  (cost=15991.00..15991.00 rows=453012 width=16) (actual time=180.818..180.820 rows=441836 loops=1)
+                                       Buckets: 524288  Batches: 1  Memory Usage: 24808kB
+                                       Buffers: shared hit=5074
+                                       ->  Hash Join  (cost=122.00..15991.00 rows=453012 width=16) (actual time=0.687..111.403 rows=441836 loops=1)
+                                             Hash Cond: (le.product_id = bg.product_id)
+                                             Buffers: shared hit=5074
+                                             ->  Seq Scan on library_entry le  (cost=0.00..14481.78 rows=527986 width=16) (actual time=0.019..64.916 rows=528304 loops=1)
+                                                   Filter: (acquired_at <= (now() - '30 days'::interval))
+                                                   Rows Removed by Filter: 11112
+                                                   Buffers: shared hit=5042
+                                             ->  Hash  (cost=72.00..72.00 rows=4000 width=8) (actual time=0.537..0.538 rows=4000 loops=1)
+                                                   Buckets: 4096  Batches: 1  Memory Usage: 189kB
+                                                   Buffers: shared hit=32
+                                                   ->  Seq Scan on base_game bg  (cost=0.00..72.00 rows=4000 width=8) (actual time=0.014..0.236 rows=4000 loops=1)
+                                                         Buffers: shared hit=32
+                     ->  Hash  (cost=149.00..149.00 rows=5000 width=37) (actual time=0.880..0.881 rows=5000 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 405kB
+                           Buffers: shared hit=99
+                           ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=37) (actual time=0.012..0.318 rows=5000 loops=1)
+                                 Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=469
+ Planning Time: 1.789 ms
+ JIT:
+   Functions: 42
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.752 ms, Inlining 0.000 ms, Optimization 0.699 ms, Emission 15.282 ms, Total 17.733 ms
+ Execution Time: 1386.239 ms
+(57 rows)
+
+## koşu 3
+                                                                                                                                    QUERY PLAN                                                                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=154004.95..154005.07 rows=50 width=109) (actual time=1360.201..1360.209 rows=50 loops=1)
+   Buffers: shared hit=12532, temp read=3470 written=6965
+   I/O Timings: temp read=4.180 write=15.461
+   ->  Sort  (cost=154004.95..154009.12 rows=1667 width=109) (actual time=1347.479..1347.485 rows=50 loops=1)
+         Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((COALESCE(sum(EXTRACT(epoch FROM (ps.ended_at - ps.started_at))) FILTER (WHERE (ps.ended_at IS NOT NULL)), '0'::numeric)) < '3600'::numeric)))::numeric) / (count(*))::numeric), 2)) DESC, ((count(*))::integer) DESC
+         Sort Method: top-N heapsort  Memory: 35kB
+         Buffers: shared hit=12532, temp read=3470 written=6965
+         I/O Timings: temp read=4.180 write=15.461
+         ->  HashAggregate  (cost=153837.06..153949.57 rows=1667 width=109) (actual time=1344.229..1346.719 rows=3835 loops=1)
+               Group Key: p.product_id
+               Filter: (count(*) >= 20)
+               Batches: 1  Memory Usage: 2257kB
+               Rows Removed by Filter: 71
+               Buffers: shared hit=12526, temp read=3470 written=6965
+               I/O Timings: temp read=4.180 write=15.461
+               ->  Hash Join  (cost=122488.51..147237.24 rows=527986 width=69) (actual time=987.078..1284.033 rows=441836 loops=1)
+                     Hash Cond: (le.product_id = p.product_id)
+                     Buffers: shared hit=12526, temp read=3470 written=6965
+                     I/O Timings: temp read=4.180 write=15.461
+                     ->  HashAggregate  (cost=122277.01..140358.74 rows=527986 width=48) (actual time=986.161..1235.964 rows=441836 loops=1)
+                           Group Key: le.library_id
+                           Planned Partitions: 8  Batches: 9  Memory Usage: 32849kB  Disk Usage: 31656kB
+                           Buffers: shared hit=12427, temp read=3470 written=6965
+                           I/O Timings: temp read=4.180 write=15.461
+                           ->  Hash Right Join  (cost=21653.65..51154.84 rows=839819 width=32) (actual time=171.808..599.108 rows=1177418 loops=1)
+                                 Hash Cond: (ps.library_id = le.library_id)
+                                 Buffers: shared hit=12427
+                                 ->  Seq Scan on play_session ps  (cost=0.00..17353.00 rows=1000000 width=24) (actual time=0.007..40.546 rows=1000000 loops=1)
+                                       Buffers: shared hit=7353
+                                 ->  Hash  (cost=15991.00..15991.00 rows=453012 width=16) (actual time=170.411..170.413 rows=441836 loops=1)
+                                       Buckets: 524288  Batches: 1  Memory Usage: 24808kB
+                                       Buffers: shared hit=5074
+                                       ->  Hash Join  (cost=122.00..15991.00 rows=453012 width=16) (actual time=0.672..111.578 rows=441836 loops=1)
+                                             Hash Cond: (le.product_id = bg.product_id)
+                                             Buffers: shared hit=5074
+                                             ->  Seq Scan on library_entry le  (cost=0.00..14481.78 rows=527986 width=16) (actual time=0.015..64.955 rows=528304 loops=1)
+                                                   Filter: (acquired_at <= (now() - '30 days'::interval))
+                                                   Rows Removed by Filter: 11112
+                                                   Buffers: shared hit=5042
+                                             ->  Hash  (cost=72.00..72.00 rows=4000 width=8) (actual time=0.536..0.537 rows=4000 loops=1)
+                                                   Buckets: 4096  Batches: 1  Memory Usage: 189kB
+                                                   Buffers: shared hit=32
+                                                   ->  Seq Scan on base_game bg  (cost=0.00..72.00 rows=4000 width=8) (actual time=0.013..0.235 rows=4000 loops=1)
+                                                         Buffers: shared hit=32
+                     ->  Hash  (cost=149.00..149.00 rows=5000 width=37) (actual time=0.881..0.881 rows=5000 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 405kB
+                           Buffers: shared hit=99
+                           ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=37) (actual time=0.013..0.325 rows=5000 loops=1)
+                                 Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=469
+ Planning Time: 2.113 ms
+ JIT:
+   Functions: 42
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.616 ms, Inlining 0.000 ms, Optimization 0.709 ms, Emission 15.361 ms, Total 17.685 ms
+ Execution Time: 1380.884 ms
+(57 rows)
+
+## koşu 4
+                                                                                                                                    QUERY PLAN                                                                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=154004.95..154005.07 rows=50 width=109) (actual time=1377.770..1377.779 rows=50 loops=1)
+   Buffers: shared hit=12532, temp read=3470 written=6965
+   I/O Timings: temp read=4.219 write=15.698
+   ->  Sort  (cost=154004.95..154009.12 rows=1667 width=109) (actual time=1365.288..1365.294 rows=50 loops=1)
+         Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((COALESCE(sum(EXTRACT(epoch FROM (ps.ended_at - ps.started_at))) FILTER (WHERE (ps.ended_at IS NOT NULL)), '0'::numeric)) < '3600'::numeric)))::numeric) / (count(*))::numeric), 2)) DESC, ((count(*))::integer) DESC
+         Sort Method: top-N heapsort  Memory: 35kB
+         Buffers: shared hit=12532, temp read=3470 written=6965
+         I/O Timings: temp read=4.219 write=15.698
+         ->  HashAggregate  (cost=153837.06..153949.57 rows=1667 width=109) (actual time=1361.969..1364.540 rows=3835 loops=1)
+               Group Key: p.product_id
+               Filter: (count(*) >= 20)
+               Batches: 1  Memory Usage: 2257kB
+               Rows Removed by Filter: 71
+               Buffers: shared hit=12526, temp read=3470 written=6965
+               I/O Timings: temp read=4.219 write=15.698
+               ->  Hash Join  (cost=122488.51..147237.24 rows=527986 width=69) (actual time=1020.124..1303.494 rows=441836 loops=1)
+                     Hash Cond: (le.product_id = p.product_id)
+                     Buffers: shared hit=12526, temp read=3470 written=6965
+                     I/O Timings: temp read=4.219 write=15.698
+                     ->  HashAggregate  (cost=122277.01..140358.74 rows=527986 width=48) (actual time=1019.220..1255.798 rows=441836 loops=1)
+                           Group Key: le.library_id
+                           Planned Partitions: 8  Batches: 9  Memory Usage: 32849kB  Disk Usage: 31656kB
+                           Buffers: shared hit=12427, temp read=3470 written=6965
+                           I/O Timings: temp read=4.219 write=15.698
+                           ->  Hash Right Join  (cost=21653.65..51154.84 rows=839819 width=32) (actual time=175.775..619.242 rows=1177418 loops=1)
+                                 Hash Cond: (ps.library_id = le.library_id)
+                                 Buffers: shared hit=12427
+                                 ->  Seq Scan on play_session ps  (cost=0.00..17353.00 rows=1000000 width=24) (actual time=0.008..41.262 rows=1000000 loops=1)
+                                       Buffers: shared hit=7353
+                                 ->  Hash  (cost=15991.00..15991.00 rows=453012 width=16) (actual time=174.369..174.371 rows=441836 loops=1)
+                                       Buckets: 524288  Batches: 1  Memory Usage: 24808kB
+                                       Buffers: shared hit=5074
+                                       ->  Hash Join  (cost=122.00..15991.00 rows=453012 width=16) (actual time=0.613..111.143 rows=441836 loops=1)
+                                             Hash Cond: (le.product_id = bg.product_id)
+                                             Buffers: shared hit=5074
+                                             ->  Seq Scan on library_entry le  (cost=0.00..14481.78 rows=527986 width=16) (actual time=0.012..64.756 rows=528304 loops=1)
+                                                   Filter: (acquired_at <= (now() - '30 days'::interval))
+                                                   Rows Removed by Filter: 11112
+                                                   Buffers: shared hit=5042
+                                             ->  Hash  (cost=72.00..72.00 rows=4000 width=8) (actual time=0.575..0.576 rows=4000 loops=1)
+                                                   Buckets: 4096  Batches: 1  Memory Usage: 189kB
+                                                   Buffers: shared hit=32
+                                                   ->  Seq Scan on base_game bg  (cost=0.00..72.00 rows=4000 width=8) (actual time=0.013..0.230 rows=4000 loops=1)
+                                                         Buffers: shared hit=32
+                     ->  Hash  (cost=149.00..149.00 rows=5000 width=37) (actual time=0.868..0.869 rows=5000 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 405kB
+                           Buffers: shared hit=99
+                           ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=37) (actual time=0.011..0.316 rows=5000 loops=1)
+                                 Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=469
+ Planning Time: 1.926 ms
+ JIT:
+   Functions: 42
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.636 ms, Inlining 0.000 ms, Optimization 0.694 ms, Emission 15.086 ms, Total 17.416 ms
+ Execution Time: 1398.724 ms
+(57 rows)
+
+## koşu 5
+                                                                                                                                    QUERY PLAN                                                                                                                                     
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=154004.95..154005.07 rows=50 width=109) (actual time=1338.469..1338.477 rows=50 loops=1)
+   Buffers: shared hit=12532, temp read=3470 written=6965
+   I/O Timings: temp read=4.119 write=15.368
+   ->  Sort  (cost=154004.95..154009.12 rows=1667 width=109) (actual time=1323.943..1323.949 rows=50 loops=1)
+         Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((COALESCE(sum(EXTRACT(epoch FROM (ps.ended_at - ps.started_at))) FILTER (WHERE (ps.ended_at IS NOT NULL)), '0'::numeric)) < '3600'::numeric)))::numeric) / (count(*))::numeric), 2)) DESC, ((count(*))::integer) DESC
+         Sort Method: top-N heapsort  Memory: 35kB
+         Buffers: shared hit=12532, temp read=3470 written=6965
+         I/O Timings: temp read=4.119 write=15.368
+         ->  HashAggregate  (cost=153837.06..153949.57 rows=1667 width=109) (actual time=1320.761..1323.193 rows=3835 loops=1)
+               Group Key: p.product_id
+               Filter: (count(*) >= 20)
+               Batches: 1  Memory Usage: 2257kB
+               Rows Removed by Filter: 71
+               Buffers: shared hit=12526, temp read=3470 written=6965
+               I/O Timings: temp read=4.119 write=15.368
+               ->  Hash Join  (cost=122488.51..147237.24 rows=527986 width=69) (actual time=967.076..1260.338 rows=441836 loops=1)
+                     Hash Cond: (le.product_id = p.product_id)
+                     Buffers: shared hit=12526, temp read=3470 written=6965
+                     I/O Timings: temp read=4.119 write=15.368
+                     ->  HashAggregate  (cost=122277.01..140358.74 rows=527986 width=48) (actual time=966.163..1212.010 rows=441836 loops=1)
+                           Group Key: le.library_id
+                           Planned Partitions: 8  Batches: 9  Memory Usage: 32849kB  Disk Usage: 31656kB
+                           Buffers: shared hit=12427, temp read=3470 written=6965
+                           I/O Timings: temp read=4.119 write=15.368
+                           ->  Hash Right Join  (cost=21653.65..51154.84 rows=839819 width=32) (actual time=178.886..588.320 rows=1177418 loops=1)
+                                 Hash Cond: (ps.library_id = le.library_id)
+                                 Buffers: shared hit=12427
+                                 ->  Seq Scan on play_session ps  (cost=0.00..17353.00 rows=1000000 width=24) (actual time=0.008..40.280 rows=1000000 loops=1)
+                                       Buffers: shared hit=7353
+                                 ->  Hash  (cost=15991.00..15991.00 rows=453012 width=16) (actual time=177.552..177.554 rows=441836 loops=1)
+                                       Buckets: 524288  Batches: 1  Memory Usage: 24808kB
+                                       Buffers: shared hit=5074
+                                       ->  Hash Join  (cost=122.00..15991.00 rows=453012 width=16) (actual time=0.570..113.386 rows=441836 loops=1)
+                                             Hash Cond: (le.product_id = bg.product_id)
+                                             Buffers: shared hit=5074
+                                             ->  Seq Scan on library_entry le  (cost=0.00..14481.78 rows=527986 width=16) (actual time=0.013..66.079 rows=528304 loops=1)
+                                                   Filter: (acquired_at <= (now() - '30 days'::interval))
+                                                   Rows Removed by Filter: 11112
+                                                   Buffers: shared hit=5042
+                                             ->  Hash  (cost=72.00..72.00 rows=4000 width=8) (actual time=0.532..0.533 rows=4000 loops=1)
+                                                   Buckets: 4096  Batches: 1  Memory Usage: 189kB
+                                                   Buffers: shared hit=32
+                                                   ->  Seq Scan on base_game bg  (cost=0.00..72.00 rows=4000 width=8) (actual time=0.014..0.231 rows=4000 loops=1)
+                                                         Buffers: shared hit=32
+                     ->  Hash  (cost=149.00..149.00 rows=5000 width=37) (actual time=0.875..0.876 rows=5000 loops=1)
+                           Buckets: 8192  Batches: 1  Memory Usage: 405kB
+                           Buffers: shared hit=99
+                           ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=37) (actual time=0.011..0.315 rows=5000 loops=1)
+                                 Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=469
+ Planning Time: 1.976 ms
+ JIT:
+   Functions: 42
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.617 ms, Inlining 0.000 ms, Optimization 1.053 ms, Emission 16.819 ms, Total 19.490 ms
+ Execution Time: 1358.646 ms
+(57 rows)
+

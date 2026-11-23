@@ -1,0 +1,9 @@
+-- CREATE INDEX süresi ve boyutu
+Time: 8.737 ms
+Time: 16.774 ms
+ indeks_boyutu 
+---------------
+ 176 kB
+(1 row)
+
+Time: 0.285 ms

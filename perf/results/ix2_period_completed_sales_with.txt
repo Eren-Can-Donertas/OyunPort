@@ -1,0 +1,172 @@
+# deney=ix2_period_completed_sales indeks=ix_store_order_completed aşama=with  tarih=2026-11-23T15:04:38+02:00
+# sorgu dosyası: perf/queries/ix2_period_completed_sales.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                                                         QUERY PLAN                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=8808.44..9465.90 rows=2500 width=48) (actual time=28.424..32.303 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=4547
+   ->  Gather Merge  (cost=8808.44..9390.89 rows=5001 width=22) (actual time=28.398..31.885 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=4547
+         ->  Sort  (cost=7808.42..7813.63 rows=2084 width=22) (actual time=24.383..24.439 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 195kB
+               Buffers: shared hit=4547
+               Worker 0:  Sort Method: quicksort  Memory: 131kB
+               Worker 1:  Sort Method: quicksort  Memory: 105kB
+               ->  Hash Join  (cost=121.71..7693.53 rows=2084 width=22) (actual time=0.704..23.766 rows=1690 loops=3)
+                     Hash Cond: (oi.order_id = so.order_id)
+                     Buffers: shared hit=4515
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..6910.49 rows=249949 width=14) (actual time=0.007..10.028 rows=199959 loops=3)
+                           Buffers: shared hit=4411
+                     ->  Hash  (cost=90.44..90.44 rows=2501 width=16) (actual time=0.552..0.552 rows=2517 loops=3)
+                           Buckets: 4096  Batches: 1  Memory Usage: 150kB
+                           Buffers: shared hit=44
+                           ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..90.44 rows=2501 width=16) (actual time=0.033..0.258 rows=2517 loops=3)
+                                 Index Cond: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone))
+                                 Heap Fetches: 0
+                                 Buffers: shared hit=44
+ Planning:
+   Buffers: shared hit=257
+ Planning Time: 0.917 ms
+ Execution Time: 32.459 ms
+(29 rows)
+
+## koşu 2
+                                                                                         QUERY PLAN                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=8808.44..9465.90 rows=2500 width=48) (actual time=27.240..30.962 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=4547
+   ->  Gather Merge  (cost=8808.44..9390.89 rows=5001 width=22) (actual time=27.209..30.371 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=4547
+         ->  Sort  (cost=7808.42..7813.63 rows=2084 width=22) (actual time=24.090..24.169 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 142kB
+               Buffers: shared hit=4547
+               Worker 0:  Sort Method: quicksort  Memory: 116kB
+               Worker 1:  Sort Method: quicksort  Memory: 125kB
+               ->  Hash Join  (cost=121.71..7693.53 rows=2084 width=22) (actual time=0.617..23.416 rows=1690 loops=3)
+                     Hash Cond: (oi.order_id = so.order_id)
+                     Buffers: shared hit=4515
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..6910.49 rows=249949 width=14) (actual time=0.006..9.907 rows=199959 loops=3)
+                           Buffers: shared hit=4411
+                     ->  Hash  (cost=90.44..90.44 rows=2501 width=16) (actual time=0.491..0.495 rows=2517 loops=3)
+                           Buckets: 4096  Batches: 1  Memory Usage: 150kB
+                           Buffers: shared hit=44
+                           ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..90.44 rows=2501 width=16) (actual time=0.023..0.229 rows=2517 loops=3)
+                                 Index Cond: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone))
+                                 Heap Fetches: 0
+                                 Buffers: shared hit=44
+ Planning:
+   Buffers: shared hit=257
+ Planning Time: 0.976 ms
+ Execution Time: 31.139 ms
+(29 rows)
+
+## koşu 3
+                                                                                         QUERY PLAN                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=8808.44..9465.90 rows=2500 width=48) (actual time=25.962..29.029 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=4547
+   ->  Gather Merge  (cost=8808.44..9390.89 rows=5001 width=22) (actual time=25.936..28.613 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=4547
+         ->  Sort  (cost=7808.42..7813.63 rows=2084 width=22) (actual time=22.687..22.735 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 195kB
+               Buffers: shared hit=4547
+               Worker 0:  Sort Method: quicksort  Memory: 131kB
+               Worker 1:  Sort Method: quicksort  Memory: 105kB
+               ->  Hash Join  (cost=121.71..7693.53 rows=2084 width=22) (actual time=0.620..22.121 rows=1690 loops=3)
+                     Hash Cond: (oi.order_id = so.order_id)
+                     Buffers: shared hit=4515
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..6910.49 rows=249949 width=14) (actual time=0.012..9.423 rows=199959 loops=3)
+                           Buffers: shared hit=4411
+                     ->  Hash  (cost=90.44..90.44 rows=2501 width=16) (actual time=0.498..0.498 rows=2517 loops=3)
+                           Buckets: 4096  Batches: 1  Memory Usage: 150kB
+                           Buffers: shared hit=44
+                           ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..90.44 rows=2501 width=16) (actual time=0.025..0.231 rows=2517 loops=3)
+                                 Index Cond: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone))
+                                 Heap Fetches: 0
+                                 Buffers: shared hit=44
+ Planning:
+   Buffers: shared hit=257
+ Planning Time: 0.949 ms
+ Execution Time: 29.186 ms
+(29 rows)
+
+## koşu 4
+                                                                                         QUERY PLAN                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=8808.44..9465.90 rows=2500 width=48) (actual time=24.270..28.079 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=4547
+   ->  Gather Merge  (cost=8808.44..9390.89 rows=5001 width=22) (actual time=24.242..27.647 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=4547
+         ->  Sort  (cost=7808.42..7813.63 rows=2084 width=22) (actual time=20.588..20.638 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 138kB
+               Buffers: shared hit=4547
+               Worker 0:  Sort Method: quicksort  Memory: 133kB
+               Worker 1:  Sort Method: quicksort  Memory: 113kB
+               ->  Hash Join  (cost=121.71..7693.53 rows=2084 width=22) (actual time=0.699..20.059 rows=1690 loops=3)
+                     Hash Cond: (oi.order_id = so.order_id)
+                     Buffers: shared hit=4515
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..6910.49 rows=249949 width=14) (actual time=0.007..8.532 rows=199959 loops=3)
+                           Buffers: shared hit=4411
+                     ->  Hash  (cost=90.44..90.44 rows=2501 width=16) (actual time=0.564..0.564 rows=2517 loops=3)
+                           Buckets: 4096  Batches: 1  Memory Usage: 150kB
+                           Buffers: shared hit=44
+                           ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..90.44 rows=2501 width=16) (actual time=0.030..0.265 rows=2517 loops=3)
+                                 Index Cond: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone))
+                                 Heap Fetches: 0
+                                 Buffers: shared hit=44
+ Planning:
+   Buffers: shared hit=257
+ Planning Time: 1.155 ms
+ Execution Time: 28.248 ms
+(29 rows)
+
+## koşu 5
+                                                                                         QUERY PLAN                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=8808.44..9465.90 rows=2500 width=48) (actual time=23.789..27.727 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=4547
+   ->  Gather Merge  (cost=8808.44..9390.89 rows=5001 width=22) (actual time=23.743..27.094 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=4547
+         ->  Sort  (cost=7808.42..7813.63 rows=2084 width=22) (actual time=20.397..20.457 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 130kB
+               Buffers: shared hit=4547
+               Worker 0:  Sort Method: quicksort  Memory: 131kB
+               Worker 1:  Sort Method: quicksort  Memory: 123kB
+               ->  Hash Join  (cost=121.71..7693.53 rows=2084 width=22) (actual time=0.644..19.853 rows=1690 loops=3)
+                     Hash Cond: (oi.order_id = so.order_id)
+                     Buffers: shared hit=4515
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..6910.49 rows=249949 width=14) (actual time=0.008..8.449 rows=199959 loops=3)
+                           Buffers: shared hit=4411
+                     ->  Hash  (cost=90.44..90.44 rows=2501 width=16) (actual time=0.542..0.543 rows=2517 loops=3)
+                           Buckets: 4096  Batches: 1  Memory Usage: 150kB
+                           Buffers: shared hit=44
+                           ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..90.44 rows=2501 width=16) (actual time=0.027..0.252 rows=2517 loops=3)
+                                 Index Cond: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone))
+                                 Heap Fetches: 0
+                                 Buffers: shared hit=44
+ Planning:
+   Buffers: shared hit=257
+ Planning Time: 1.038 ms
+ Execution Time: 27.923 ms
+(29 rows)
+

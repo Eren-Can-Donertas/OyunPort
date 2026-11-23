@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  application:
+    name: oyunport
+  main:
+    banner-mode: off
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: always
+  # Flyway migration'ları şema sahibi db_admin ile, uygulama havuzlarından AYRI bir bağlantıyla çalışır.
+  flyway:
+    url: ${DB_URL:jdbc:postgresql://localhost:55433/oyunport}
+    user: db_admin
+    password: ${DB_ADMIN_PASSWORD:db_admin_dev_pw}
+    locations: classpath:db/migration
+    placeholders:
+      appCustomerPassword: ${APP_CUSTOMER_DB_PASSWORD:app_customer_dev_pw}
+      appAdminPassword: ${APP_ADMIN_DB_PASSWORD:app_admin_dev_pw}
+      reportingPassword: ${REPORTING_DB_PASSWORD:reporting_dev_pw}
+      dataLoaderPassword: ${DATA_LOADER_DB_PASSWORD:data_loader_dev_pw}
+
+oyunport:
+  db:
+    url: ${DB_URL:jdbc:postgresql://localhost:55433/oyunport}
+    customer:
+      username: app_customer
+      password: ${APP_CUSTOMER_DB_PASSWORD:app_customer_dev_pw}
+      max-pool-size: 20
+    admin:
+      username: app_admin
+      password: ${APP_ADMIN_DB_PASSWORD:app_admin_dev_pw}
+      max-pool-size: 5
+  jwt:
+    secret: ${JWT_SECRET:oyunport-dev-jwt-secret-change-me-0123456789}
+    ttl-minutes: 480
+
+logging:
+  level:
+    root: INFO
+    # Transaction sınırlarını (BEGIN/COMMIT/ROLLBACK) görmek için DEBUG yapın.
+    tr.edu.etu.oyunport.db: INFO
+    tr.edu.etu.oyunport.order: INFO

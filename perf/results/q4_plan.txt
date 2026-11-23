@@ -1,0 +1,62 @@
+# q4 = rpt_q4_low_playtime_games  tarih=2026-11-23T15:05:18+02:00
+## satır sayısı: 3835
+## ilk 5 satır
+ product_id |              title              | eligible_owners | low_play_owners | low_play_pct | avg_hours_played 
+------------+---------------------------------+-----------------+-----------------+--------------+------------------
+       1489 | Yankı Efsanesi #1489            |              90 |              54 |        60.00 |             2.70
+        273 | Karanlık Şövalye Zero #273      |            2315 |            1363 |        58.88 |             2.16
+       3936 | Yitik Yankı: Demir Lejyon #3936 |             120 |              73 |        60.83 |             2.25
+       2574 | Gizli Yankı #2574               |             508 |             295 |        58.07 |             2.21
+        951 | Gölge Mağara #951               |              53 |              31 |        58.49 |             2.17
+(5 rows)
+
+## EXPLAIN (ANALYZE, BUFFERS)
+                                                                                         QUERY PLAN                                                                                         
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ HashAggregate  (cost=138018.82..138131.33 rows=1667 width=109) (actual time=1232.384..1234.947 rows=3835 loops=1)
+   Group Key: p.product_id
+   Filter: (count(*) >= 20)
+   Batches: 1  Memory Usage: 2257kB
+   Rows Removed by Filter: 71
+   Buffers: shared hit=1020019
+   ->  Hash Join  (cost=212.64..131418.98 rows=527987 width=69) (actual time=10.928..1134.658 rows=441836 loops=1)
+         Hash Cond: (le.product_id = p.product_id)
+         Buffers: shared hit=1020019
+         ->  GroupAggregate  (cost=1.14..124540.47 rows=527987 width=48) (actual time=10.052..1072.657 rows=441836 loops=1)
+               Group Key: le.library_id
+               Buffers: shared hit=1019920
+               ->  Merge Left Join  (cost=1.14..109542.42 rows=839821 width=32) (actual time=10.030..814.191 rows=1177418 loops=1)
+                     Merge Cond: (le.library_id = ps.library_id)
+                     Buffers: shared hit=1019920
+                     ->  Nested Loop  (cost=0.72..37691.98 rows=453013 width=16) (actual time=10.010..242.614 rows=441836 loops=1)
+                           Buffers: shared hit=16217
+                           ->  Index Scan using pk_library_entry on library_entry le  (cost=0.42..23106.28 rows=527987 width=16) (actual time=9.976..106.495 rows=528304 loops=1)
+                                 Filter: (acquired_at <= (now() - '30 days'::interval))
+                                 Rows Removed by Filter: 11112
+                                 Buffers: shared hit=6518
+                           ->  Memoize  (cost=0.29..0.31 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=528304)
+                                 Cache Key: le.product_id
+                                 Cache Mode: logical
+                                 Hits: 523455  Misses: 4849  Evictions: 0  Overflows: 0  Memory Usage: 494kB
+                                 Buffers: shared hit=9699
+                                 ->  Index Only Scan using pk_base_game on base_game bg  (cost=0.28..0.30 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=4849)
+                                       Index Cond: (product_id = le.product_id)
+                                       Heap Fetches: 0
+                                       Buffers: shared hit=9699
+                     ->  Index Scan using ix_play_session_library_started on play_session ps  (cost=0.42..59819.70 rows=1000000 width=24) (actual time=0.014..435.021 rows=1000000 loops=1)
+                           Buffers: shared hit=1003703
+         ->  Hash  (cost=149.00..149.00 rows=5000 width=37) (actual time=0.844..0.844 rows=5000 loops=1)
+               Buckets: 8192  Batches: 1  Memory Usage: 405kB
+               Buffers: shared hit=99
+               ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=37) (actual time=0.007..0.312 rows=5000 loops=1)
+                     Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=500
+ Planning Time: 3.231 ms
+ JIT:
+   Functions: 30
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.054 ms, Inlining 0.000 ms, Optimization 0.377 ms, Emission 9.626 ms, Total 11.057 ms
+ Execution Time: 1250.040 ms
+(45 rows)
+

@@ -1,0 +1,18 @@
+ RUN  v2.1.8 /app
+
+ ✓ src/cart/cartStore.test.ts (18 tests) 13ms
+ ✓ src/lib/reportFormat.test.ts (3 tests) 5ms
+ ✓ src/lib/retry.test.ts (4 tests) 9ms
+ ✓ src/lib/format.test.ts (8 tests) 7ms
+
+ Test Files  4 passed (4)
+      Tests  33 passed (33)
+   Start at  13:06:08
+   Duration  364ms (transform 162ms, setup 0ms, collect 322ms, tests 34ms, environment 1ms, prepare 287ms)
+
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.53 kB │ gzip:  0.33 kB
+dist/assets/index-CNJybK7q.css   18.47 kB │ gzip:  4.45 kB
+dist/assets/index-Ulpx63uR.js   257.91 kB │ gzip: 78.08 kB
+✓ built in 787ms

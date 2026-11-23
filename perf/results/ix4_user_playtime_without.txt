@@ -1,0 +1,182 @@
+# deney=ix4_user_playtime indeks=ix_play_session_library_started aşama=without  tarih=2026-11-23T15:04:41+02:00
+# sorgu dosyası: perf/queries/ix4_user_playtime.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                                                        QUERY PLAN                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=14066.73..14122.97 rows=245 width=40) (actual time=35.729..39.685 rows=117 loops=1)
+   Group Key: le.product_id
+   Buffers: shared hit=7962
+   ->  Gather Merge  (cost=14066.73..14116.62 rows=390 width=40) (actual time=35.724..39.645 rows=213 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=7962
+         ->  Partial GroupAggregate  (cost=13066.71..13071.58 rows=195 width=40) (actual time=31.651..31.686 rows=71 loops=3)
+               Group Key: le.product_id
+               Buffers: shared hit=7962
+               ->  Sort  (cost=13066.71..13067.19 rows=195 width=32) (actual time=31.643..31.650 rows=149 loops=3)
+                     Sort Key: le.product_id
+                     Sort Method: quicksort  Memory: 34kB
+                     Buffers: shared hit=7962
+                     Worker 0:  Sort Method: quicksort  Memory: 32kB
+                     Worker 1:  Sort Method: quicksort  Memory: 32kB
+                     ->  Hash Join  (cost=445.86..13059.29 rows=195 width=32) (actual time=0.453..31.527 rows=149 loops=3)
+                           Hash Cond: (ps.library_id = le.library_id)
+                           Buffers: shared hit=7946
+                           ->  Parallel Seq Scan on play_session ps  (cost=0.00..11519.67 rows=416667 width=32) (actual time=0.008..14.517 rows=333333 loops=3)
+                                 Buffers: shared hit=7353
+                           ->  Hash  (cost=442.71..442.71 rows=252 width=16) (actual time=0.182..0.183 rows=269 loops=3)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                                 Buffers: shared hit=575
+                                 ->  Index Scan using uq_library_entry_user_product on library_entry le  (cost=0.42..442.71 rows=252 width=16) (actual time=0.068..0.141 rows=269 loops=3)
+                                       Index Cond: (user_id = 11564)
+                                       Buffers: shared hit=575
+ Planning:
+   Buffers: shared hit=187
+ Planning Time: 0.795 ms
+ Execution Time: 39.815 ms
+(31 rows)
+
+## koşu 2
+                                                                                        QUERY PLAN                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=14066.73..14122.97 rows=245 width=40) (actual time=34.132..38.222 rows=117 loops=1)
+   Group Key: le.product_id
+   Buffers: shared hit=7962
+   ->  Gather Merge  (cost=14066.73..14116.62 rows=390 width=40) (actual time=34.127..38.182 rows=210 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=7962
+         ->  Partial GroupAggregate  (cost=13066.71..13071.58 rows=195 width=40) (actual time=30.581..30.618 rows=70 loops=3)
+               Group Key: le.product_id
+               Buffers: shared hit=7962
+               ->  Sort  (cost=13066.71..13067.19 rows=195 width=32) (actual time=30.573..30.583 rows=149 loops=3)
+                     Sort Key: le.product_id
+                     Sort Method: quicksort  Memory: 34kB
+                     Buffers: shared hit=7962
+                     Worker 0:  Sort Method: quicksort  Memory: 33kB
+                     Worker 1:  Sort Method: quicksort  Memory: 32kB
+                     ->  Hash Join  (cost=445.86..13059.29 rows=195 width=32) (actual time=0.450..30.513 rows=149 loops=3)
+                           Hash Cond: (ps.library_id = le.library_id)
+                           Buffers: shared hit=7946
+                           ->  Parallel Seq Scan on play_session ps  (cost=0.00..11519.67 rows=416667 width=32) (actual time=0.005..14.065 rows=333333 loops=3)
+                                 Buffers: shared hit=7353
+                           ->  Hash  (cost=442.71..442.71 rows=252 width=16) (actual time=0.123..0.124 rows=269 loops=3)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                                 Buffers: shared hit=575
+                                 ->  Index Scan using uq_library_entry_user_product on library_entry le  (cost=0.42..442.71 rows=252 width=16) (actual time=0.042..0.092 rows=269 loops=3)
+                                       Index Cond: (user_id = 11564)
+                                       Buffers: shared hit=575
+ Planning:
+   Buffers: shared hit=187
+ Planning Time: 0.750 ms
+ Execution Time: 38.359 ms
+(31 rows)
+
+## koşu 3
+                                                                                        QUERY PLAN                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=14066.73..14122.97 rows=245 width=40) (actual time=34.125..38.392 rows=117 loops=1)
+   Group Key: le.product_id
+   Buffers: shared hit=7962
+   ->  Gather Merge  (cost=14066.73..14116.62 rows=390 width=40) (actual time=34.118..38.345 rows=216 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=7962
+         ->  Partial GroupAggregate  (cost=13066.71..13071.58 rows=195 width=40) (actual time=30.898..30.934 rows=72 loops=3)
+               Group Key: le.product_id
+               Buffers: shared hit=7962
+               ->  Sort  (cost=13066.71..13067.19 rows=195 width=32) (actual time=30.890..30.897 rows=149 loops=3)
+                     Sort Key: le.product_id
+                     Sort Method: quicksort  Memory: 34kB
+                     Buffers: shared hit=7962
+                     Worker 0:  Sort Method: quicksort  Memory: 32kB
+                     Worker 1:  Sort Method: quicksort  Memory: 32kB
+                     ->  Hash Join  (cost=445.86..13059.29 rows=195 width=32) (actual time=0.349..30.827 rows=149 loops=3)
+                           Hash Cond: (ps.library_id = le.library_id)
+                           Buffers: shared hit=7946
+                           ->  Parallel Seq Scan on play_session ps  (cost=0.00..11519.67 rows=416667 width=32) (actual time=0.005..14.108 rows=333333 loops=3)
+                                 Buffers: shared hit=7353
+                           ->  Hash  (cost=442.71..442.71 rows=252 width=16) (actual time=0.126..0.127 rows=269 loops=3)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                                 Buffers: shared hit=575
+                                 ->  Index Scan using uq_library_entry_user_product on library_entry le  (cost=0.42..442.71 rows=252 width=16) (actual time=0.041..0.095 rows=269 loops=3)
+                                       Index Cond: (user_id = 11564)
+                                       Buffers: shared hit=575
+ Planning:
+   Buffers: shared hit=187
+ Planning Time: 0.741 ms
+ Execution Time: 38.514 ms
+(31 rows)
+
+## koşu 4
+                                                                                        QUERY PLAN                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=14066.73..14122.97 rows=245 width=40) (actual time=32.854..36.921 rows=117 loops=1)
+   Group Key: le.product_id
+   Buffers: shared hit=7962
+   ->  Gather Merge  (cost=14066.73..14116.62 rows=390 width=40) (actual time=32.847..36.882 rows=206 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=7962
+         ->  Partial GroupAggregate  (cost=13066.71..13071.58 rows=195 width=40) (actual time=30.136..30.172 rows=69 loops=3)
+               Group Key: le.product_id
+               Buffers: shared hit=7962
+               ->  Sort  (cost=13066.71..13067.19 rows=195 width=32) (actual time=30.129..30.136 rows=149 loops=3)
+                     Sort Key: le.product_id
+                     Sort Method: quicksort  Memory: 34kB
+                     Buffers: shared hit=7962
+                     Worker 0:  Sort Method: quicksort  Memory: 33kB
+                     Worker 1:  Sort Method: quicksort  Memory: 32kB
+                     ->  Hash Join  (cost=445.86..13059.29 rows=195 width=32) (actual time=0.438..30.071 rows=149 loops=3)
+                           Hash Cond: (ps.library_id = le.library_id)
+                           Buffers: shared hit=7946
+                           ->  Parallel Seq Scan on play_session ps  (cost=0.00..11519.67 rows=416667 width=32) (actual time=0.004..13.842 rows=333333 loops=3)
+                                 Buffers: shared hit=7353
+                           ->  Hash  (cost=442.71..442.71 rows=252 width=16) (actual time=0.113..0.114 rows=269 loops=3)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                                 Buffers: shared hit=575
+                                 ->  Index Scan using uq_library_entry_user_product on library_entry le  (cost=0.42..442.71 rows=252 width=16) (actual time=0.037..0.083 rows=269 loops=3)
+                                       Index Cond: (user_id = 11564)
+                                       Buffers: shared hit=575
+ Planning:
+   Buffers: shared hit=187
+ Planning Time: 0.756 ms
+ Execution Time: 37.055 ms
+(31 rows)
+
+## koşu 5
+                                                                                        QUERY PLAN                                                                                         
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate  (cost=14066.73..14122.97 rows=245 width=40) (actual time=34.379..38.721 rows=117 loops=1)
+   Group Key: le.product_id
+   Buffers: shared hit=7962
+   ->  Gather Merge  (cost=14066.73..14116.62 rows=390 width=40) (actual time=34.370..38.680 rows=206 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=7962
+         ->  Partial GroupAggregate  (cost=13066.71..13071.58 rows=195 width=40) (actual time=30.352..30.389 rows=69 loops=3)
+               Group Key: le.product_id
+               Buffers: shared hit=7962
+               ->  Sort  (cost=13066.71..13067.19 rows=195 width=32) (actual time=30.344..30.351 rows=149 loops=3)
+                     Sort Key: le.product_id
+                     Sort Method: quicksort  Memory: 34kB
+                     Buffers: shared hit=7962
+                     Worker 0:  Sort Method: quicksort  Memory: 32kB
+                     Worker 1:  Sort Method: quicksort  Memory: 33kB
+                     ->  Hash Join  (cost=445.86..13059.29 rows=195 width=32) (actual time=0.486..30.275 rows=149 loops=3)
+                           Hash Cond: (ps.library_id = le.library_id)
+                           Buffers: shared hit=7946
+                           ->  Parallel Seq Scan on play_session ps  (cost=0.00..11519.67 rows=416667 width=32) (actual time=0.007..13.943 rows=333333 loops=3)
+                                 Buffers: shared hit=7353
+                           ->  Hash  (cost=442.71..442.71 rows=252 width=16) (actual time=0.168..0.168 rows=269 loops=3)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                                 Buffers: shared hit=575
+                                 ->  Index Scan using uq_library_entry_user_product on library_entry le  (cost=0.42..442.71 rows=252 width=16) (actual time=0.057..0.129 rows=269 loops=3)
+                                       Index Cond: (user_id = 11564)
+                                       Buffers: shared hit=575
+ Planning:
+   Buffers: shared hit=187
+ Planning Time: 1.442 ms
+ Execution Time: 38.852 ms
+(31 rows)
+

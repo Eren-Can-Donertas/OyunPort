@@ -1,0 +1,4 @@
+uid=11564  (en çok siparişi olan kullanıcı; sipariş sayısı: 134)
+pid=3325  (satış adedine göre 201. ürün; kalem sayısı: 393)
+pub=7  (en çok ürünü olan publisher; ürün sayısı: 38)
+RUNS=5 (+1 ısınma koşusu, ölçüme dahil değil)

@@ -1,0 +1,107 @@
+# q5 = rpt_q5_dlc_conversion  tarih=2026-11-23T15:05:21+02:00
+## satır sayısı: 408
+## ilk 5 satır
+ base_game_id |        title         | dlc_count | base_owners | dlc_buyers | conversion_pct 
+--------------+----------------------+-----------+-------------+------------+----------------
+            7 | Gizli Ufuk #7        |         1 |         724 |        305 |          42.13
+           19 | Orman Efsanesi #19   |         2 |        1715 |        775 |          45.19
+           29 | Sınır Yolculuğu #29  |         1 |         101 |         39 |          38.61
+           44 | Paslı Bahçe Zero #44 |         1 |         333 |        144 |          43.24
+           47 | Dağ Yolculuğu #47    |         2 |         355 |        156 |          43.94
+(5 rows)
+
+## EXPLAIN (ANALYZE, BUFFERS)
+                                                                                   QUERY PLAN                                                                                   
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=77.22..2500303.16 rows=29877 width=81) (actual time=566.268..843.365 rows=408 loops=1)
+   Group Key: bg.product_id, p.title
+   Filter: (count(*) >= 100)
+   Rows Removed by Filter: 362
+   Buffers: shared hit=274496 read=2
+   I/O Timings: shared read=0.012
+   ->  Incremental Sort  (cost=77.22..19956.29 rows=89632 width=45) (actual time=384.233..600.853 rows=165293 loops=1)
+         Sort Key: bg.product_id, p.title
+         Presorted Key: bg.product_id
+         Full-sort Groups: 748  Sort Method: quicksort  Average Memory: 29kB  Peak Memory: 29kB
+         Pre-sorted Groups: 618  Sort Method: quicksort  Average Memory: 339kB  Peak Memory: 547kB
+         Buffers: shared hit=263571
+         ->  Merge Join  (cost=72.55..16745.47 rows=89632 width=45) (actual time=383.669..570.313 rows=165293 loops=1)
+               Merge Cond: (le.product_id = bg.product_id)
+               Buffers: shared hit=263568
+               ->  Nested Loop  (cost=72.27..18291.05 rows=124913 width=61) (actual time=383.651..558.598 rows=165293 loops=1)
+                     Buffers: shared hit=263555
+                     ->  Nested Loop  (cost=71.97..6912.43 rows=126741 width=61) (actual time=383.631..464.332 rows=167737 loops=1)
+                           Join Filter: (le.product_id = d1.base_game_id)
+                           Buffers: shared hit=159110
+                           ->  Merge Join  (cost=71.54..285.98 rows=786 width=45) (actual time=383.608..384.575 rows=786 loops=1)
+                                 Merge Cond: (p.product_id = d1.base_game_id)
+                                 Buffers: shared hit=96
+                                 ->  Index Scan using pk_product on product p  (cost=0.28..241.28 rows=5000 width=37) (actual time=0.009..0.533 rows=4000 loops=1)
+                                       Buffers: shared hit=83
+                                 ->  Sort  (cost=71.16..73.13 rows=786 width=8) (actual time=0.326..0.398 rows=786 loops=1)
+                                       Sort Key: d1.base_game_id
+                                       Sort Method: quicksort  Memory: 25kB
+                                       Buffers: shared hit=13
+                                       ->  HashAggregate  (cost=25.50..33.36 rows=786 width=8) (actual time=0.201..0.239 rows=786 loops=1)
+                                             Group Key: d1.base_game_id
+                                             Batches: 1  Memory Usage: 73kB
+                                             Buffers: shared hit=13
+                                             ->  Seq Scan on dlc d1  (cost=0.00..23.00 rows=1000 width=8) (actual time=0.018..0.087 rows=1000 loops=1)
+                                                   Buffers: shared hit=13
+                           ->  Index Scan using ix_library_entry_product on library_entry le  (cost=0.42..6.98 rows=116 width=16) (actual time=0.003..0.088 rows=213 loops=786)
+                                 Index Cond: (product_id = p.product_id)
+                                 Buffers: shared hit=159014
+                     ->  Memoize  (cost=0.30..0.32 rows=1 width=8) (actual time=0.000..0.000 rows=1 loops=167737)
+                           Cache Key: le.user_id
+                           Cache Mode: logical
+                           Hits: 132922  Misses: 34815  Evictions: 0  Overflows: 0  Memory Usage: 3790kB
+                           Buffers: shared hit=104445
+                           ->  Index Scan using pk_app_user on app_user u  (cost=0.29..0.31 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=34815)
+                                 Index Cond: (user_id = le.user_id)
+                                 Filter: is_active
+                                 Rows Removed by Filter: 0
+                                 Buffers: shared hit=104445
+               ->  Index Only Scan using pk_base_game on base_game bg  (cost=0.28..116.28 rows=4000 width=8) (actual time=0.012..0.304 rows=3999 loops=1)
+                     Heap Fetches: 0
+                     Buffers: shared hit=13
+   SubPlan 1
+     ->  Aggregate  (cost=4.30..4.31 rows=1 width=8) (actual time=0.001..0.001 rows=1 loops=408)
+           Buffers: shared hit=815 read=2
+           I/O Timings: shared read=0.012
+           ->  Index Only Scan using ix_dlc_base_game on dlc d0  (cost=0.28..4.29 rows=1 width=0) (actual time=0.001..0.001 rows=1 loops=408)
+                 Index Cond: (base_game_id = bg.product_id)
+                 Heap Fetches: 0
+                 Buffers: shared hit=815 read=2
+                 I/O Timings: shared read=0.012
+   SubPlan 3
+     ->  Hash Join  (cost=35.50..11888.92 rows=115705 width=16) (actual time=12.992..68.762 rows=88592 loops=1)
+           Hash Cond: (le2.product_id = d.product_id)
+           Buffers: shared hit=5055
+           ->  Seq Scan on library_entry le2  (cost=0.00..10436.16 rows=539416 width=16) (actual time=0.005..21.279 rows=539416 loops=1)
+                 Buffers: shared hit=5042
+           ->  Hash  (cost=23.00..23.00 rows=1000 width=16) (actual time=12.956..12.956 rows=1000 loops=1)
+                 Buckets: 1024  Batches: 1  Memory Usage: 55kB
+                 Buffers: shared hit=13
+                 ->  Seq Scan on dlc d  (cost=0.00..23.00 rows=1000 width=16) (actual time=12.803..12.855 rows=1000 loops=1)
+                       Buffers: shared hit=13
+   SubPlan 5
+     ->  Hash Join  (cost=35.50..11888.92 rows=115705 width=16) (actual time=12.324..63.414 rows=88592 loops=1)
+           Hash Cond: (le2_1.product_id = d_1.product_id)
+           Buffers: shared hit=5055
+           ->  Seq Scan on library_entry le2_1  (cost=0.00..10436.16 rows=539416 width=16) (actual time=0.005..19.082 rows=539416 loops=1)
+                 Buffers: shared hit=5042
+           ->  Hash  (cost=23.00..23.00 rows=1000 width=16) (actual time=12.305..12.305 rows=1000 loops=1)
+                 Buckets: 1024  Batches: 1  Memory Usage: 55kB
+                 Buffers: shared hit=13
+                 ->  Seq Scan on dlc d_1  (cost=0.00..23.00 rows=1000 width=16) (actual time=12.151..12.206 rows=1000 loops=1)
+                       Buffers: shared hit=13
+ Planning:
+   Buffers: shared hit=542
+ Planning Time: 6.104 ms
+ JIT:
+   Functions: 86
+   Options: Inlining true, Optimization true, Expressions true, Deforming true
+   Timing: Generation 2.690 ms, Inlining 39.991 ms, Optimization 202.582 ms, Emission 181.817 ms, Total 427.080 ms
+ Execution Time: 864.149 ms
+(90 rows)
+

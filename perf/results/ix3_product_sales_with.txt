@@ -1,0 +1,152 @@
+# deney=ix3_product_sales indeks=ix_order_item_product_order aşama=with  tarih=2026-11-23T15:04:40+02:00
+# sorgu dosyası: perf/queries/ix3_product_sales.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                                        QUERY PLAN                                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=17.62..6094.24 rows=1 width=77) (actual time=2.757..2.758 rows=1 loops=1)
+   Buffers: shared hit=1966
+   ->  Nested Loop  (cost=17.62..6091.62 rows=521 width=43) (actual time=0.144..2.723 rows=355 loops=1)
+         Buffers: shared hit=1966
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.029..0.029 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Nested Loop  (cost=17.34..6078.11 rows=521 width=14) (actual time=0.114..2.669 rows=355 loops=1)
+               Buffers: shared hit=1960
+               ->  Bitmap Heap Scan on order_item oi  (cost=16.92..1629.46 rows=580 width=22) (actual time=0.102..0.992 rows=393 loops=1)
+                     Recheck Cond: (product_id = 3325)
+                     Heap Blocks: exact=383
+                     Buffers: shared hit=388
+                     ->  Bitmap Index Scan on ix_order_item_product_order  (cost=0.00..16.78 rows=580 width=0) (actual time=0.068..0.068 rows=393 loops=1)
+                           Index Cond: (product_id = 3325)
+                           Buffers: shared hit=5
+               ->  Index Scan using pk_store_order on store_order so  (cost=0.42..7.67 rows=1 width=8) (actual time=0.004..0.004 rows=1 loops=393)
+                     Index Cond: (order_id = oi.order_id)
+                     Filter: ((status)::text = 'COMPLETED'::text)
+                     Rows Removed by Filter: 0
+                     Buffers: shared hit=1572
+ Planning:
+   Buffers: shared hit=317
+ Planning Time: 1.136 ms
+ Execution Time: 2.839 ms
+(25 rows)
+
+## koşu 2
+                                                                        QUERY PLAN                                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=17.62..6094.24 rows=1 width=77) (actual time=2.875..2.876 rows=1 loops=1)
+   Buffers: shared hit=1966
+   ->  Nested Loop  (cost=17.62..6091.62 rows=521 width=43) (actual time=0.144..2.828 rows=355 loops=1)
+         Buffers: shared hit=1966
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.027..0.028 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Nested Loop  (cost=17.34..6078.11 rows=521 width=14) (actual time=0.115..2.768 rows=355 loops=1)
+               Buffers: shared hit=1960
+               ->  Bitmap Heap Scan on order_item oi  (cost=16.92..1629.46 rows=580 width=22) (actual time=0.100..1.011 rows=393 loops=1)
+                     Recheck Cond: (product_id = 3325)
+                     Heap Blocks: exact=383
+                     Buffers: shared hit=388
+                     ->  Bitmap Index Scan on ix_order_item_product_order  (cost=0.00..16.78 rows=580 width=0) (actual time=0.067..0.067 rows=393 loops=1)
+                           Index Cond: (product_id = 3325)
+                           Buffers: shared hit=5
+               ->  Index Scan using pk_store_order on store_order so  (cost=0.42..7.67 rows=1 width=8) (actual time=0.004..0.004 rows=1 loops=393)
+                     Index Cond: (order_id = oi.order_id)
+                     Filter: ((status)::text = 'COMPLETED'::text)
+                     Rows Removed by Filter: 0
+                     Buffers: shared hit=1572
+ Planning:
+   Buffers: shared hit=317
+ Planning Time: 1.185 ms
+ Execution Time: 2.962 ms
+(25 rows)
+
+## koşu 3
+                                                                        QUERY PLAN                                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=17.62..6094.24 rows=1 width=77) (actual time=2.761..2.762 rows=1 loops=1)
+   Buffers: shared hit=1966
+   ->  Nested Loop  (cost=17.62..6091.62 rows=521 width=43) (actual time=0.138..2.717 rows=355 loops=1)
+         Buffers: shared hit=1966
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.028..0.029 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Nested Loop  (cost=17.34..6078.11 rows=521 width=14) (actual time=0.108..2.656 rows=355 loops=1)
+               Buffers: shared hit=1960
+               ->  Bitmap Heap Scan on order_item oi  (cost=16.92..1629.46 rows=580 width=22) (actual time=0.097..0.969 rows=393 loops=1)
+                     Recheck Cond: (product_id = 3325)
+                     Heap Blocks: exact=383
+                     Buffers: shared hit=388
+                     ->  Bitmap Index Scan on ix_order_item_product_order  (cost=0.00..16.78 rows=580 width=0) (actual time=0.063..0.063 rows=393 loops=1)
+                           Index Cond: (product_id = 3325)
+                           Buffers: shared hit=5
+               ->  Index Scan using pk_store_order on store_order so  (cost=0.42..7.67 rows=1 width=8) (actual time=0.004..0.004 rows=1 loops=393)
+                     Index Cond: (order_id = oi.order_id)
+                     Filter: ((status)::text = 'COMPLETED'::text)
+                     Rows Removed by Filter: 0
+                     Buffers: shared hit=1572
+ Planning:
+   Buffers: shared hit=317
+ Planning Time: 1.141 ms
+ Execution Time: 2.845 ms
+(25 rows)
+
+## koşu 4
+                                                                        QUERY PLAN                                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=17.62..6094.24 rows=1 width=77) (actual time=2.895..2.896 rows=1 loops=1)
+   Buffers: shared hit=1966
+   ->  Nested Loop  (cost=17.62..6091.62 rows=521 width=43) (actual time=0.149..2.849 rows=355 loops=1)
+         Buffers: shared hit=1966
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.027..0.028 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Nested Loop  (cost=17.34..6078.11 rows=521 width=14) (actual time=0.120..2.789 rows=355 loops=1)
+               Buffers: shared hit=1960
+               ->  Bitmap Heap Scan on order_item oi  (cost=16.92..1629.46 rows=580 width=22) (actual time=0.104..1.011 rows=393 loops=1)
+                     Recheck Cond: (product_id = 3325)
+                     Heap Blocks: exact=383
+                     Buffers: shared hit=388
+                     ->  Bitmap Index Scan on ix_order_item_product_order  (cost=0.00..16.78 rows=580 width=0) (actual time=0.068..0.068 rows=393 loops=1)
+                           Index Cond: (product_id = 3325)
+                           Buffers: shared hit=5
+               ->  Index Scan using pk_store_order on store_order so  (cost=0.42..7.67 rows=1 width=8) (actual time=0.004..0.004 rows=1 loops=393)
+                     Index Cond: (order_id = oi.order_id)
+                     Filter: ((status)::text = 'COMPLETED'::text)
+                     Rows Removed by Filter: 0
+                     Buffers: shared hit=1572
+ Planning:
+   Buffers: shared hit=317
+ Planning Time: 1.251 ms
+ Execution Time: 2.990 ms
+(25 rows)
+
+## koşu 5
+                                                                        QUERY PLAN                                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=17.62..6094.24 rows=1 width=77) (actual time=3.157..3.158 rows=1 loops=1)
+   Buffers: shared hit=1966
+   ->  Nested Loop  (cost=17.62..6091.62 rows=521 width=43) (actual time=0.155..3.107 rows=355 loops=1)
+         Buffers: shared hit=1966
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.038..0.039 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Nested Loop  (cost=17.34..6078.11 rows=521 width=14) (actual time=0.115..3.031 rows=355 loops=1)
+               Buffers: shared hit=1960
+               ->  Bitmap Heap Scan on order_item oi  (cost=16.92..1629.46 rows=580 width=22) (actual time=0.102..1.108 rows=393 loops=1)
+                     Recheck Cond: (product_id = 3325)
+                     Heap Blocks: exact=383
+                     Buffers: shared hit=388
+                     ->  Bitmap Index Scan on ix_order_item_product_order  (cost=0.00..16.78 rows=580 width=0) (actual time=0.069..0.069 rows=393 loops=1)
+                           Index Cond: (product_id = 3325)
+                           Buffers: shared hit=5
+               ->  Index Scan using pk_store_order on store_order so  (cost=0.42..7.67 rows=1 width=8) (actual time=0.005..0.005 rows=1 loops=393)
+                     Index Cond: (order_id = oi.order_id)
+                     Filter: ((status)::text = 'COMPLETED'::text)
+                     Rows Removed by Filter: 0
+                     Buffers: shared hit=1572
+ Planning:
+   Buffers: shared hit=317
+ Planning Time: 1.326 ms
+ Execution Time: 3.240 ms
+(25 rows)
+

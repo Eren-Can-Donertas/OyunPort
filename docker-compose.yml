@@ -1,0 +1,75 @@
+name: oyunport
+
+# Tüm servisler tek komutla ayağa kalkar:  docker compose up -d --build
+# Varsayılan değerler .env olmadan da çalışır (yalnızca geliştirme amaçlıdır).
+
+services:
+  db:
+    image: postgres:16-alpine
+    # Paralel sorgular dinamik paylaşımlı bellek kullanır; Docker'ın varsayılan 64 MB /dev/shm'si
+    # 1 M satırlık analitik sorgularda yetersiz kalıyor ("could not resize shared memory segment").
+    shm_size: 1gb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD:-postgres_dev_pw}
+      POSTGRES_DB: postgres
+      DB_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-db_admin_dev_pw}
+      OYUNPORT_DB_NAME: oyunport
+      TZ: UTC
+    command:
+      - postgres
+      - -c
+      - shared_buffers=256MB
+      - -c
+      - work_mem=16MB
+      - -c
+      - maintenance_work_mem=256MB
+      - -c
+      - max_wal_size=2GB
+      - -c
+      - track_io_timing=on
+    ports:
+      - "127.0.0.1:${DB_HOST_PORT:-55433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - ./datagen/out:/datagen:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d oyunport"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/oyunport
+      DB_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD:-db_admin_dev_pw}
+      APP_CUSTOMER_DB_PASSWORD: ${APP_CUSTOMER_DB_PASSWORD:-app_customer_dev_pw}
+      APP_ADMIN_DB_PASSWORD: ${APP_ADMIN_DB_PASSWORD:-app_admin_dev_pw}
+      REPORTING_DB_PASSWORD: ${REPORTING_DB_PASSWORD:-reporting_dev_pw}
+      DATA_LOADER_DB_PASSWORD: ${DATA_LOADER_DB_PASSWORD:-data_loader_dev_pw}
+      JWT_SECRET: ${JWT_SECRET:-oyunport-dev-jwt-secret-change-me-0123456789}
+    ports:
+      - "127.0.0.1:${BACKEND_HOST_PORT:-8081}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/api/health >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 60
+
+  web:
+    build:
+      context: ./frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${WEB_HOST_PORT:-8080}:80"
+
+volumes:
+  pgdata:

@@ -1,0 +1,157 @@
+# deney=ix3_product_sales indeks=ix_order_item_product_order aşama=without  tarih=2026-11-23T15:04:39+02:00
+# sorgu dosyası: perf/queries/ix3_product_sales.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=1000.71..8929.91 rows=1 width=77) (actual time=13.884..16.203 rows=1 loops=1)
+   Buffers: shared hit=5991
+   ->  Nested Loop  (cost=1000.71..8929.40 rows=98 width=43) (actual time=0.281..16.160 rows=355 loops=1)
+         Buffers: shared hit=5991
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.020..0.022 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Gather  (cost=1000.42..8920.12 rows=98 width=14) (actual time=0.260..16.103 rows=355 loops=1)
+               Workers Planned: 2
+               Workers Launched: 2
+               Buffers: shared hit=5985
+               ->  Nested Loop  (cost=0.42..7910.32 rows=41 width=14) (actual time=0.173..9.501 rows=118 loops=3)
+                     Buffers: shared hit=5985
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..7535.36 rows=45 width=22) (actual time=0.131..8.714 rows=131 loops=3)
+                           Filter: (product_id = 3325)
+                           Rows Removed by Filter: 199828
+                           Buffers: shared hit=4411
+                     ->  Index Scan using pk_store_order on store_order so  (cost=0.42..8.33 rows=1 width=8) (actual time=0.006..0.006 rows=1 loops=393)
+                           Index Cond: (order_id = oi.order_id)
+                           Filter: ((status)::text = 'COMPLETED'::text)
+                           Rows Removed by Filter: 0
+                           Buffers: shared hit=1574
+ Planning:
+   Buffers: shared hit=314
+ Planning Time: 1.118 ms
+ Execution Time: 16.284 ms
+(26 rows)
+
+## koşu 2
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=1000.71..8929.91 rows=1 width=77) (actual time=11.127..13.928 rows=1 loops=1)
+   Buffers: shared hit=5991
+   ->  Nested Loop  (cost=1000.71..8929.40 rows=98 width=43) (actual time=0.274..13.886 rows=355 loops=1)
+         Buffers: shared hit=5991
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.022..0.023 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Gather  (cost=1000.42..8920.12 rows=98 width=14) (actual time=0.251..13.830 rows=355 loops=1)
+               Workers Planned: 2
+               Workers Launched: 2
+               Buffers: shared hit=5985
+               ->  Nested Loop  (cost=0.42..7910.32 rows=41 width=14) (actual time=0.068..8.223 rows=118 loops=3)
+                     Buffers: shared hit=5985
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..7535.36 rows=45 width=22) (actual time=0.047..7.544 rows=131 loops=3)
+                           Filter: (product_id = 3325)
+                           Rows Removed by Filter: 199828
+                           Buffers: shared hit=4411
+                     ->  Index Scan using pk_store_order on store_order so  (cost=0.42..8.33 rows=1 width=8) (actual time=0.005..0.005 rows=1 loops=393)
+                           Index Cond: (order_id = oi.order_id)
+                           Filter: ((status)::text = 'COMPLETED'::text)
+                           Rows Removed by Filter: 0
+                           Buffers: shared hit=1574
+ Planning:
+   Buffers: shared hit=314
+ Planning Time: 1.095 ms
+ Execution Time: 14.008 ms
+(26 rows)
+
+## koşu 3
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=1000.71..8929.91 rows=1 width=77) (actual time=13.422..15.898 rows=1 loops=1)
+   Buffers: shared hit=5991
+   ->  Nested Loop  (cost=1000.71..8929.40 rows=98 width=43) (actual time=0.277..15.858 rows=355 loops=1)
+         Buffers: shared hit=5991
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.023..0.025 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Gather  (cost=1000.42..8920.12 rows=98 width=14) (actual time=0.253..15.804 rows=355 loops=1)
+               Workers Planned: 2
+               Workers Launched: 2
+               Buffers: shared hit=5985
+               ->  Nested Loop  (cost=0.42..7910.32 rows=41 width=14) (actual time=0.109..9.076 rows=118 loops=3)
+                     Buffers: shared hit=5985
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..7535.36 rows=45 width=22) (actual time=0.070..8.331 rows=131 loops=3)
+                           Filter: (product_id = 3325)
+                           Rows Removed by Filter: 199828
+                           Buffers: shared hit=4411
+                     ->  Index Scan using pk_store_order on store_order so  (cost=0.42..8.33 rows=1 width=8) (actual time=0.005..0.005 rows=1 loops=393)
+                           Index Cond: (order_id = oi.order_id)
+                           Filter: ((status)::text = 'COMPLETED'::text)
+                           Rows Removed by Filter: 0
+                           Buffers: shared hit=1574
+ Planning:
+   Buffers: shared hit=314
+ Planning Time: 1.098 ms
+ Execution Time: 15.992 ms
+(26 rows)
+
+## koşu 4
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=1000.71..8929.91 rows=1 width=77) (actual time=12.001..14.738 rows=1 loops=1)
+   Buffers: shared hit=5991
+   ->  Nested Loop  (cost=1000.71..8929.40 rows=98 width=43) (actual time=0.290..14.695 rows=355 loops=1)
+         Buffers: shared hit=5991
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.022..0.022 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Gather  (cost=1000.42..8920.12 rows=98 width=14) (actual time=0.267..14.641 rows=355 loops=1)
+               Workers Planned: 2
+               Workers Launched: 2
+               Buffers: shared hit=5985
+               ->  Nested Loop  (cost=0.42..7910.32 rows=41 width=14) (actual time=0.079..8.944 rows=118 loops=3)
+                     Buffers: shared hit=5985
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..7535.36 rows=45 width=22) (actual time=0.045..8.208 rows=131 loops=3)
+                           Filter: (product_id = 3325)
+                           Rows Removed by Filter: 199828
+                           Buffers: shared hit=4411
+                     ->  Index Scan using pk_store_order on store_order so  (cost=0.42..8.33 rows=1 width=8) (actual time=0.005..0.005 rows=1 loops=393)
+                           Index Cond: (order_id = oi.order_id)
+                           Filter: ((status)::text = 'COMPLETED'::text)
+                           Rows Removed by Filter: 0
+                           Buffers: shared hit=1574
+ Planning:
+   Buffers: shared hit=314
+ Planning Time: 1.151 ms
+ Execution Time: 14.820 ms
+(26 rows)
+
+## koşu 5
+                                                                       QUERY PLAN                                                                        
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=1000.71..8929.91 rows=1 width=77) (actual time=11.272..14.109 rows=1 loops=1)
+   Buffers: shared hit=5991
+   ->  Nested Loop  (cost=1000.71..8929.40 rows=98 width=43) (actual time=0.290..14.073 rows=355 loops=1)
+         Buffers: shared hit=5991
+         ->  Index Scan using pk_product on product p  (cost=0.28..8.30 rows=1 width=37) (actual time=0.020..0.021 rows=1 loops=1)
+               Index Cond: (product_id = 3325)
+               Buffers: shared hit=6
+         ->  Gather  (cost=1000.42..8920.12 rows=98 width=14) (actual time=0.269..13.996 rows=355 loops=1)
+               Workers Planned: 2
+               Workers Launched: 2
+               Buffers: shared hit=5985
+               ->  Nested Loop  (cost=0.42..7910.32 rows=41 width=14) (actual time=0.073..8.329 rows=118 loops=3)
+                     Buffers: shared hit=5985
+                     ->  Parallel Seq Scan on order_item oi  (cost=0.00..7535.36 rows=45 width=22) (actual time=0.047..7.653 rows=131 loops=3)
+                           Filter: (product_id = 3325)
+                           Rows Removed by Filter: 199828
+                           Buffers: shared hit=4411
+                     ->  Index Scan using pk_store_order on store_order so  (cost=0.42..8.33 rows=1 width=8) (actual time=0.005..0.005 rows=1 loops=393)
+                           Index Cond: (order_id = oi.order_id)
+                           Filter: ((status)::text = 'COMPLETED'::text)
+                           Rows Removed by Filter: 0
+                           Buffers: shared hit=1574
+ Planning:
+   Buffers: shared hit=314
+ Planning Time: 1.138 ms
+ Execution Time: 14.193 ms
+(26 rows)
+

@@ -1,0 +1,10 @@
+.env
+backend/target/
+frontend/node_modules/
+frontend/dist/
+datagen/out/*
+!datagen/out/.gitkeep
+__pycache__/
+*.pyc
+.idea/
+.vscode/

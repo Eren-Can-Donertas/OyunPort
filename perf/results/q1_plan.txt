@@ -1,0 +1,78 @@
+# q1 = rpt_q1_monthly_top_publishers  tarih=2026-11-23T15:05:13+02:00
+## satır sayısı: 105
+## ilk 5 satır
+ sales_month | revenue_rank | publisher_id |    publisher_name    | units_sold | revenue  | month_revenue | revenue_share_pct 
+-------------+--------------+--------------+----------------------+------------+----------+---------------+-------------------
+ 2024-01-01  |            1 |          135 | Atlas Yayıncılık 135 |         58 | 46561.98 |    1828430.83 |              2.55
+ 2024-01-01  |            2 |           26 | Mavi Kuş Medya 26    |         49 | 45025.57 |    1828430.83 |              2.46
+ 2024-01-01  |            3 |          169 | Boğaz Yayıncılık 169 |         43 | 29606.11 |    1828430.83 |              1.62
+ 2024-02-01  |            1 |          135 | Atlas Yayıncılık 135 |         57 | 44763.50 |    1766667.67 |              2.53
+ 2024-02-01  |            2 |           26 | Mavi Kuş Medya 26    |         60 | 42287.98 |    1766667.67 |              2.39
+(5 rows)
+
+## EXPLAIN (ANALYZE, BUFFERS)
+                                                                                            QUERY PLAN                                                                                             
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on ranked  (cost=261533.89..288487.39 rows=539070 width=346) (actual time=556.397..557.272 rows=105 loops=1)
+   Buffers: shared hit=5555
+   CTE monthly_publisher
+     ->  HashAggregate  (cost=80540.06..99744.43 rows=539070 width=71) (actual time=542.151..544.109 rows=8605 loops=1)
+           Group Key: (date_trunc('month'::text, (so.completed_at AT TIME ZONE 'Europe/Istanbul'::text)))::date, pu.publisher_id
+           Planned Partitions: 8  Batches: 1  Memory Usage: 7185kB
+           Buffers: shared hit=5549
+           ->  Hash Join  (cost=11793.27..30676.08 rows=539070 width=37) (actual time=66.544..440.370 rows=539416 loops=1)
+                 Hash Cond: (p.publisher_id = pu.publisher_id)
+                 Buffers: shared hit=5549
+                 ->  Hash Join  (cost=11785.65..25186.39 rows=539070 width=22) (actual time=51.012..251.462 rows=539416 loops=1)
+                       Hash Cond: (oi.product_id = p.product_id)
+                       Buffers: shared hit=5547
+                       ->  Hash Join  (cost=11574.15..23558.63 rows=539070 width=22) (actual time=50.258..196.956 rows=539416 loops=1)
+                             Hash Cond: (oi.order_id = so.order_id)
+                             Buffers: shared hit=5448
+                             ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=22) (actual time=0.006..24.268 rows=599878 loops=1)
+                                   Buffers: shared hit=4411
+                             ->  Hash  (cost=8204.27..8204.27 rows=269590 width=16) (actual time=48.903..48.904 rows=269703 loops=1)
+                                   Buckets: 524288  Batches: 1  Memory Usage: 16739kB
+                                   Buffers: shared hit=1037
+                                   ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..8204.27 rows=269590 width=16) (actual time=0.033..16.096 rows=269703 loops=1)
+                                         Heap Fetches: 0
+                                         Buffers: shared hit=1037
+                       ->  Hash  (cost=149.00..149.00 rows=5000 width=16) (actual time=0.721..0.722 rows=5000 loops=1)
+                             Buckets: 8192  Batches: 1  Memory Usage: 299kB
+                             Buffers: shared hit=99
+                             ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=16) (actual time=0.009..0.310 rows=5000 loops=1)
+                                   Buffers: shared hit=99
+                 ->  Hash  (cost=4.50..4.50 rows=250 width=27) (actual time=15.399..15.399 rows=250 loops=1)
+                       Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                       Buffers: shared hit=2
+                       ->  Seq Scan on publisher pu  (cost=0.00..4.50 rows=250 width=27) (actual time=15.335..15.357 rows=250 loops=1)
+                             Buffers: shared hit=2
+   ->  WindowAgg  (cost=161789.46..172570.86 rows=539070 width=350) (actual time=556.389..557.202 rows=105 loops=1)
+         Run Condition: (dense_rank() OVER (?) <= 3)
+         Buffers: shared hit=5555
+         ->  Sort  (cost=161789.46..163137.13 rows=539070 width=342) (actual time=556.366..556.660 rows=8605 loops=1)
+               Sort Key: mp.sales_month, mp.revenue DESC
+               Sort Method: quicksort  Memory: 1176kB
+               Buffers: shared hit=5555
+               ->  Hash Join  (cost=13483.75..25710.19 rows=539070 width=342) (actual time=547.382..548.724 rows=8605 loops=1)
+                     Hash Cond: (mp.sales_month = mt.sales_month)
+                     Buffers: shared hit=5549
+                     ->  CTE Scan on monthly_publisher mp  (cost=0.00..10781.40 rows=539070 width=310) (actual time=542.154..542.624 rows=8605 loops=1)
+                           Buffers: shared hit=5549
+                     ->  Hash  (cost=13481.25..13481.25 rows=200 width=36) (actual time=5.207..5.207 rows=35 loops=1)
+                           Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                           ->  Subquery Scan on mt  (cost=13476.75..13481.25 rows=200 width=36) (actual time=5.191..5.199 rows=35 loops=1)
+                                 ->  HashAggregate  (cost=13476.75..13479.25 rows=200 width=36) (actual time=5.189..5.195 rows=35 loops=1)
+                                       Group Key: monthly_publisher.sales_month
+                                       Batches: 1  Memory Usage: 48kB
+                                       ->  CTE Scan on monthly_publisher  (cost=0.00..10781.40 rows=539070 width=36) (actual time=0.000..3.866 rows=8605 loops=1)
+ Planning:
+   Buffers: shared hit=634
+ Planning Time: 3.666 ms
+ JIT:
+   Functions: 51
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.589 ms, Inlining 0.000 ms, Optimization 0.568 ms, Emission 14.846 ms, Total 17.002 ms
+ Execution Time: 576.109 ms
+(61 rows)
+

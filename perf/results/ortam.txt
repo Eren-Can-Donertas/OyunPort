@@ -1,0 +1,14 @@
+Tarih: 2026-11-23T15:04:35+02:00
+Ana makine: Linux 7.0.0-42-generic, CPU çekirdek: 16, RAM: 15 GB
+PostgreSQL: PostgreSQL 16.14 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+effective_cache_size = 524288 8kB
+jit = on
+max_parallel_workers_per_gather = 2
+random_page_cost = 4
+shared_buffers = 32768 8kB
+work_mem = 16384 kB
+library_entry: 539416 satır, 88 MB
+order_item: 599878 satır, 89 MB
+play_session: 1000000 satır, 109 MB
+product: 5000 satır, 1136 kB
+store_order: 300000 satır, 95 MB

@@ -1,0 +1,87 @@
+# deney=ix5_publisher_catalog indeks=ix_product_publisher_release aşama=without  tarih=2026-11-23T15:05:00+02:00
+# sorgu dosyası: perf/queries/ix5_publisher_catalog.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=162.50..162.59 rows=38 width=48) (actual time=0.286..0.287 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=102
+   ->  Seq Scan on product p  (cost=0.00..161.50 rows=38 width=48) (actual time=0.011..0.259 rows=38 loops=1)
+         Filter: (publisher_id = 7)
+         Rows Removed by Filter: 4962
+         Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=92
+ Planning Time: 0.360 ms
+ Execution Time: 0.329 ms
+(12 rows)
+
+## koşu 2
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=162.50..162.59 rows=38 width=48) (actual time=0.492..0.495 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=102
+   ->  Seq Scan on product p  (cost=0.00..161.50 rows=38 width=48) (actual time=0.018..0.442 rows=38 loops=1)
+         Filter: (publisher_id = 7)
+         Rows Removed by Filter: 4962
+         Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=92
+ Planning Time: 0.735 ms
+ Execution Time: 0.575 ms
+(12 rows)
+
+## koşu 3
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=162.50..162.59 rows=38 width=48) (actual time=0.502..0.505 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=102
+   ->  Seq Scan on product p  (cost=0.00..161.50 rows=38 width=48) (actual time=0.019..0.444 rows=38 loops=1)
+         Filter: (publisher_id = 7)
+         Rows Removed by Filter: 4962
+         Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=92
+ Planning Time: 0.753 ms
+ Execution Time: 0.587 ms
+(12 rows)
+
+## koşu 4
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=162.50..162.59 rows=38 width=48) (actual time=0.495..0.497 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=102
+   ->  Seq Scan on product p  (cost=0.00..161.50 rows=38 width=48) (actual time=0.020..0.444 rows=38 loops=1)
+         Filter: (publisher_id = 7)
+         Rows Removed by Filter: 4962
+         Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=92
+ Planning Time: 0.779 ms
+ Execution Time: 0.581 ms
+(12 rows)
+
+## koşu 5
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Sort  (cost=162.50..162.59 rows=38 width=48) (actual time=0.282..0.284 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=102
+   ->  Seq Scan on product p  (cost=0.00..161.50 rows=38 width=48) (actual time=0.011..0.256 rows=38 loops=1)
+         Filter: (publisher_id = 7)
+         Rows Removed by Filter: 4962
+         Buffers: shared hit=99
+ Planning:
+   Buffers: shared hit=92
+ Planning Time: 0.345 ms
+ Execution Time: 0.327 ms
+(12 rows)
+

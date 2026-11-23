@@ -1,0 +1,402 @@
+{
+  "ix1_user_order_history": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        12.87,
+        12.467,
+        15.182,
+        16.991,
+        14.967
+      ],
+      "exec_median": 14.967,
+      "exec_min": 12.467,
+      "exec_max": 16.991,
+      "plan_median": 0.517,
+      "top_cost": 8575.51,
+      "top_est_rows": 20,
+      "top_actual_rows": 20,
+      "shared_hit": 6083,
+      "shared_read": 0,
+      "scans": [
+        "Parallel Seq Scan on store_order"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        0.065,
+        0.065,
+        0.064,
+        0.104,
+        0.066
+      ],
+      "exec_median": 0.065,
+      "exec_min": 0.064,
+      "exec_max": 0.104,
+      "plan_median": 0.587,
+      "top_cost": 44.63,
+      "top_est_rows": 20,
+      "top_actual_rows": 20,
+      "shared_hit": 8,
+      "shared_read": 0,
+      "scans": [
+        "Index Scan using ix_store_order_user_created on store_order"
+      ]
+    },
+    "speedup": 230.26153846153846
+  },
+  "ix2_period_completed_sales": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        21.318,
+        43.302,
+        20.643,
+        34.236,
+        20.412
+      ],
+      "exec_median": 21.318,
+      "exec_min": 20.412,
+      "exec_max": 43.302,
+      "plan_median": 0.923,
+      "top_cost": 17279.12,
+      "top_est_rows": 2217,
+      "top_actual_rows": 8,
+      "shared_hit": 15531,
+      "shared_read": 603,
+      "scans": [
+        "Index Scan using uq_order_item_order_product on order_item",
+        "Parallel Seq Scan on store_order"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        32.459,
+        31.139,
+        29.186,
+        28.248,
+        27.923
+      ],
+      "exec_median": 29.186,
+      "exec_min": 27.923,
+      "exec_max": 32.459,
+      "plan_median": 0.976,
+      "top_cost": 9465.9,
+      "top_est_rows": 2500,
+      "top_actual_rows": 8,
+      "shared_hit": 4547,
+      "shared_read": 0,
+      "scans": [
+        "Index Only Scan using ix_store_order_completed on store_order",
+        "Parallel Seq Scan on order_item"
+      ]
+    },
+    "speedup": 0.7304186938943329
+  },
+  "ix2r_period_sales_rpc11": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        22.293,
+        19.518,
+        26.445,
+        19.153,
+        22.94
+      ],
+      "exec_median": 22.293,
+      "exec_min": 19.153,
+      "exec_max": 26.445,
+      "plan_median": 0.913,
+      "top_cost": 11970.99,
+      "top_est_rows": 2130,
+      "top_actual_rows": 8,
+      "shared_hit": 16134,
+      "shared_read": 0,
+      "scans": [
+        "Index Scan using uq_order_item_order_product on order_item",
+        "Parallel Seq Scan on store_order"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        11.199,
+        11.388,
+        11.269,
+        11.849,
+        11.069
+      ],
+      "exec_median": 11.269,
+      "exec_min": 11.069,
+      "exec_max": 11.849,
+      "plan_median": 0.96,
+      "top_cost": 5354.49,
+      "top_est_rows": 2074,
+      "top_actual_rows": 8,
+      "shared_hit": 10111,
+      "shared_read": 0,
+      "scans": [
+        "Index Only Scan using ix_store_order_completed on store_order",
+        "Index Scan using uq_order_item_order_product on order_item"
+      ]
+    },
+    "speedup": 1.9782589404561184
+  },
+  "ix3_product_sales": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        16.284,
+        14.008,
+        15.992,
+        14.82,
+        14.193
+      ],
+      "exec_median": 14.82,
+      "exec_min": 14.008,
+      "exec_max": 16.284,
+      "plan_median": 1.118,
+      "top_cost": 8929.91,
+      "top_est_rows": 1,
+      "top_actual_rows": 1,
+      "shared_hit": 5991,
+      "shared_read": 0,
+      "scans": [
+        "Index Scan using pk_product on product",
+        "Index Scan using pk_store_order on store_order",
+        "Parallel Seq Scan on order_item"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        2.839,
+        2.962,
+        2.845,
+        2.99,
+        3.24
+      ],
+      "exec_median": 2.962,
+      "exec_min": 2.839,
+      "exec_max": 3.24,
+      "plan_median": 1.185,
+      "top_cost": 6094.24,
+      "top_est_rows": 1,
+      "top_actual_rows": 1,
+      "shared_hit": 1966,
+      "shared_read": 0,
+      "scans": [
+        "Bitmap Heap Scan on order_item",
+        "Bitmap Index Scan on ix_order_item_product_order",
+        "Index Scan using pk_product on product",
+        "Index Scan using pk_store_order on store_order"
+      ]
+    },
+    "speedup": 5.0033760972316
+  },
+  "ix4_user_playtime": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        39.815,
+        38.359,
+        38.514,
+        37.055,
+        38.852
+      ],
+      "exec_median": 38.514,
+      "exec_min": 37.055,
+      "exec_max": 39.815,
+      "plan_median": 0.756,
+      "top_cost": 14122.97,
+      "top_est_rows": 245,
+      "top_actual_rows": 117,
+      "shared_hit": 7962,
+      "shared_read": 0,
+      "scans": [
+        "Index Scan using uq_library_entry_user_product on library_entry",
+        "Parallel Seq Scan on play_session"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        1.659,
+        1.629,
+        1.739,
+        1.945,
+        1.68
+      ],
+      "exec_median": 1.68,
+      "exec_min": 1.629,
+      "exec_max": 1.945,
+      "plan_median": 0.991,
+      "top_cost": 10215.18,
+      "top_est_rows": 245,
+      "top_actual_rows": 117,
+      "shared_hit": 1446,
+      "shared_read": 0,
+      "scans": [
+        "Index Scan using ix_play_session_library_started on play_session",
+        "Index Scan using uq_library_entry_user_product on library_entry"
+      ]
+    },
+    "speedup": 22.925000000000004
+  },
+  "ix4b_q4_low_playtime": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        1405.859,
+        1386.239,
+        1380.884,
+        1398.724,
+        1358.646
+      ],
+      "exec_median": 1386.239,
+      "exec_min": 1358.646,
+      "exec_max": 1405.859,
+      "plan_median": 1.976,
+      "top_cost": 154005.07,
+      "top_est_rows": 50,
+      "top_actual_rows": 50,
+      "shared_hit": 12532,
+      "shared_read": 0,
+      "scans": [
+        "Seq Scan on base_game",
+        "Seq Scan on library_entry",
+        "Seq Scan on play_session",
+        "Seq Scan on product"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        1200.73,
+        1186.958,
+        1220.323,
+        1232.0,
+        1237.152
+      ],
+      "exec_median": 1220.323,
+      "exec_min": 1186.958,
+      "exec_max": 1237.152,
+      "plan_median": 2.001,
+      "top_cost": 138186.72,
+      "top_est_rows": 50,
+      "top_actual_rows": 50,
+      "shared_hit": 1020025,
+      "shared_read": 0,
+      "scans": [
+        "Index Only Scan using pk_base_game on base_game",
+        "Index Scan using ix_play_session_library_started on play_session",
+        "Index Scan using pk_library_entry on library_entry",
+        "Seq Scan on product"
+      ]
+    },
+    "speedup": 1.1359607251522752
+  },
+  "ix5_publisher_catalog": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        0.329,
+        0.575,
+        0.587,
+        0.581,
+        0.327
+      ],
+      "exec_median": 0.575,
+      "exec_min": 0.327,
+      "exec_max": 0.587,
+      "plan_median": 0.735,
+      "top_cost": 162.59,
+      "top_est_rows": 38,
+      "top_actual_rows": 38,
+      "shared_hit": 102,
+      "shared_read": 0,
+      "scans": [
+        "Seq Scan on product"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        0.381,
+        0.215,
+        0.168,
+        0.327,
+        0.197
+      ],
+      "exec_median": 0.215,
+      "exec_min": 0.168,
+      "exec_max": 0.381,
+      "plan_median": 0.466,
+      "top_cost": 79.56,
+      "top_est_rows": 38,
+      "top_actual_rows": 38,
+      "shared_hit": 40,
+      "shared_read": 0,
+      "scans": [
+        "Bitmap Heap Scan on product",
+        "Bitmap Index Scan on ix_product_publisher_release"
+      ]
+    },
+    "speedup": 2.6744186046511627
+  },
+  "ix5b_q1_monthly_publishers": {
+    "without": {
+      "runs": 5,
+      "exec_ms": [
+        599.264,
+        592.253,
+        554.969,
+        576.651,
+        643.813
+      ],
+      "exec_median": 592.253,
+      "exec_min": 554.969,
+      "exec_max": 643.813,
+      "plan_median": 2.31,
+      "top_cost": 427629.3,
+      "top_est_rows": 538910,
+      "top_actual_rows": 105,
+      "shared_hit": 5558,
+      "shared_read": 0,
+      "scans": [
+        "Index Only Scan using ix_store_order_completed on store_order",
+        "Seq Scan on order_item",
+        "Seq Scan on product",
+        "Seq Scan on publisher"
+      ]
+    },
+    "with": {
+      "runs": 5,
+      "exec_ms": [
+        582.201,
+        579.807,
+        575.33,
+        596.219,
+        587.742
+      ],
+      "exec_median": 582.201,
+      "exec_min": 575.33,
+      "exec_max": 596.219,
+      "plan_median": 2.586,
+      "top_cost": 427629.3,
+      "top_est_rows": 538910,
+      "top_actual_rows": 105,
+      "shared_hit": 5558,
+      "shared_read": 0,
+      "scans": [
+        "Index Only Scan using ix_store_order_completed on store_order",
+        "Seq Scan on order_item",
+        "Seq Scan on product",
+        "Seq Scan on publisher"
+      ]
+    },
+    "speedup": 1.0172655148307888
+  }
+}

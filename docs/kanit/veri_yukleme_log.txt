@@ -1,0 +1,101 @@
+# Veri yükleme günlüğü — 2026-11-23T15:00:26+02:00
+# manifest: {  "scale": "full",  "seed": 372,  "generated_at": "2026-11-23T12:19:09+00:00",  "counts": {    "genre": 18,    "publisher": 250,    "developer": 600,    "product": 5000,    "base_game": 4000,    "dlc": 1000,    "product_genre": 8462,    "product_developer": 6028,    "app_user": 40000,    "store_order": 300000,    "order_item": 599878,    "payment_attempt": 351010,    "library_entry": 539416,    "orders_completed": 269703,    "orders_pending": 15297,    "orders_cancelled": 15000,    "payments_failed": 81307,    "play_session": 1000000,    "review": 80000,    "wishlist": 150000,    "generation_seconds": 16.2  }}
+Timing is on.
+== TX1: APP_USER, USER_ROLE ve katalog
+BEGIN
+Time: 0.102 ms
+CREATE TABLE
+Time: 1.584 ms
+COPY 40000
+Time: 42.810 ms
+INSERT 0 40000
+Time: 159.481 ms
+INSERT 0 40000
+Time: 749.112 ms
+COPY 18
+Time: 0.567 ms
+COPY 250
+Time: 0.748 ms
+COPY 600
+Time: 1.352 ms
+COPY 5000
+Time: 58.147 ms
+COPY 4000
+Time: 115.264 ms
+COPY 1000
+Time: 43.334 ms
+COPY 8462
+Time: 156.900 ms
+COPY 6028
+Time: 114.230 ms
+COMMIT
+Time: 273.486 ms
+== TX2: STORE_ORDER (PENDING) ve ORDER_ITEM
+BEGIN
+Time: 0.113 ms
+CREATE TABLE
+Time: 0.413 ms
+CREATE TABLE
+Time: 0.270 ms
+COPY 300000
+Time: 299.685 ms
+COPY 599878
+Time: 188.263 ms
+INSERT 0 300000
+Time: 3972.148 ms (00:03.972)
+INSERT 0 599878
+Time: 18469.300 ms (00:18.469)
+COMMIT
+Time: 5671.685 ms (00:05.672)
+== TX3: PAYMENT_ATTEMPT ve sipariş durum güncellemesi
+BEGIN
+Time: 0.141 ms
+CREATE TABLE
+Time: 0.482 ms
+CREATE TABLE
+Time: 0.935 ms
+COPY 351010
+Time: 416.232 ms
+COPY 284703
+Time: 251.793 ms
+INSERT 0 351010
+Time: 11591.540 ms (00:11.592)
+UPDATE 284703
+Time: 6216.107 ms (00:06.216)
+COMMIT
+Time: 2773.570 ms (00:02.774)
+== TX4: LIBRARY_ENTRY
+BEGIN
+Time: 0.073 ms
+CREATE TABLE
+Time: 0.453 ms
+COPY 539416
+Time: 335.810 ms
+INSERT 0 539416
+Time: 17285.721 ms (00:17.286)
+COMMIT
+Time: 21592.887 ms (00:21.593)
+== TX5: PLAY_SESSION, REVIEW, WISHLIST
+BEGIN
+Time: 0.121 ms
+CREATE TABLE
+Time: 1.489 ms
+CREATE TABLE
+Time: 0.873 ms
+CREATE TABLE
+Time: 0.258 ms
+COPY 1000000
+Time: 817.470 ms
+COPY 80000
+Time: 84.060 ms
+COPY 150000
+Time: 78.720 ms
+INSERT 0 1000000
+Time: 33002.695 ms (00:33.003)
+INSERT 0 80000
+Time: 1968.259 ms (00:01.968)
+INSERT 0 150000
+Time: 3325.400 ms (00:03.325)
+COMMIT
+Time: 6.357 ms
+# Toplam yükleme süresi (duvar saati): 130 s

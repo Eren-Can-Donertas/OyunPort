@@ -1,0 +1,102 @@
+# deney=ix5_publisher_catalog indeks=ix_product_publisher_release aşama=with  tarih=2026-11-23T15:05:01+02:00
+# sorgu dosyası: perf/queries/ix5_publisher_catalog.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=79.47..79.56 rows=38 width=48) (actual time=0.278..0.280 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=40
+   ->  Bitmap Heap Scan on product p  (cost=4.58..78.47 rows=38 width=48) (actual time=0.070..0.228 rows=38 loops=1)
+         Recheck Cond: (publisher_id = 7)
+         Heap Blocks: exact=32
+         Buffers: shared hit=37
+         ->  Bitmap Index Scan on ix_product_publisher_release  (cost=0.00..4.57 rows=38 width=0) (actual time=0.055..0.055 rows=38 loops=1)
+               Index Cond: (publisher_id = 7)
+               Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=116
+ Planning Time: 0.919 ms
+ Execution Time: 0.381 ms
+(15 rows)
+
+## koşu 2
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=79.47..79.56 rows=38 width=48) (actual time=0.113..0.114 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=40
+   ->  Bitmap Heap Scan on product p  (cost=4.58..78.47 rows=38 width=48) (actual time=0.032..0.081 rows=38 loops=1)
+         Recheck Cond: (publisher_id = 7)
+         Heap Blocks: exact=32
+         Buffers: shared hit=37
+         ->  Bitmap Index Scan on ix_product_publisher_release  (cost=0.00..4.57 rows=38 width=0) (actual time=0.021..0.021 rows=38 loops=1)
+               Index Cond: (publisher_id = 7)
+               Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=116
+ Planning Time: 0.466 ms
+ Execution Time: 0.215 ms
+(15 rows)
+
+## koşu 3
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=79.47..79.56 rows=38 width=48) (actual time=0.108..0.110 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=40
+   ->  Bitmap Heap Scan on product p  (cost=4.58..78.47 rows=38 width=48) (actual time=0.030..0.079 rows=38 loops=1)
+         Recheck Cond: (publisher_id = 7)
+         Heap Blocks: exact=32
+         Buffers: shared hit=37
+         ->  Bitmap Index Scan on ix_product_publisher_release  (cost=0.00..4.57 rows=38 width=0) (actual time=0.020..0.020 rows=38 loops=1)
+               Index Cond: (publisher_id = 7)
+               Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=116
+ Planning Time: 0.443 ms
+ Execution Time: 0.168 ms
+(15 rows)
+
+## koşu 4
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=79.47..79.56 rows=38 width=48) (actual time=0.205..0.207 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=40
+   ->  Bitmap Heap Scan on product p  (cost=4.58..78.47 rows=38 width=48) (actual time=0.067..0.156 rows=38 loops=1)
+         Recheck Cond: (publisher_id = 7)
+         Heap Blocks: exact=32
+         Buffers: shared hit=37
+         ->  Bitmap Index Scan on ix_product_publisher_release  (cost=0.00..4.57 rows=38 width=0) (actual time=0.050..0.050 rows=38 loops=1)
+               Index Cond: (publisher_id = 7)
+               Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=116
+ Planning Time: 0.994 ms
+ Execution Time: 0.327 ms
+(15 rows)
+
+## koşu 5
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=79.47..79.56 rows=38 width=48) (actual time=0.125..0.127 rows=38 loops=1)
+   Sort Key: release_date DESC
+   Sort Method: quicksort  Memory: 28kB
+   Buffers: shared hit=40
+   ->  Bitmap Heap Scan on product p  (cost=4.58..78.47 rows=38 width=48) (actual time=0.045..0.098 rows=38 loops=1)
+         Recheck Cond: (publisher_id = 7)
+         Heap Blocks: exact=32
+         Buffers: shared hit=37
+         ->  Bitmap Index Scan on ix_product_publisher_release  (cost=0.00..4.57 rows=38 width=0) (actual time=0.033..0.034 rows=38 loops=1)
+               Index Cond: (publisher_id = 7)
+               Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=116
+ Planning Time: 0.459 ms
+ Execution Time: 0.197 ms
+(15 rows)
+

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="tr.edu.etu.oyunport.CheckoutIT" time="3.45" tests="17" errors="0" skipped="0" failures="0" flakes="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/workspace/backend/target/test-classes:/workspace/backend/target/classes:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.5.16/spring-boot-starter-web-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter/3.5.16/spring-boot-starter-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot/3.5.16/spring-boot-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.5.16/spring-boot-autoconfigure-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.5.16/spring-boot-starter-logging-3.5.16.jar:/tmp/home/.m2/repository/ch/qos/logback/logback-classic/1.5.34/logback-classic-1.5.34.jar:/tmp/home/.m2/repository/ch/qos/logback/logback-core/1.5.34/logback-core-1.5.34.jar:/tmp/home/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.24.3/log4j-to-slf4j-2.24.3.jar:/tmp/home/.m2/repository/org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar:/tmp/home/.m2/repository/org/slf4j/jul-to-slf4j/2.0.18/jul-to-slf4j-2.0.18.jar:/tmp/home/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/tmp/home/.m2/repository/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.5.16/spring-boot-starter-json-3.5.16.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.21.4/jackson-datatype-jdk8-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.21.4/jackson-module-parameter-names-2.21.4.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.5.16/spring-boot-starter-tomcat-3.5.16.jar:/tmp/home/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.55/tomcat-embed-core-10.1.55.jar:/tmp/home/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.55/tomcat-embed-websocket-10.1.55.jar:/tmp/home/.m2/repository/org/springframework/spring-web/6.2.19/spring-web-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-beans/6.2.19/spring-beans-6.2.19.jar:/tmp/home/.m2/repository/io/micrometer/micrometer-observation/1.15.12/micrometer-observation-1.15.12.jar:/tmp/home/.m2/repository/io/micrometer/micrometer-commons/1.15.12/micrometer-commons-1.15.12.jar:/tmp/home/.m2/repository/org/springframework/spring-webmvc/6.2.19/spring-webmvc-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-context/6.2.19/spring-context-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-expression/6.2.19/spring-expression-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.5.16/spring-boot-starter-security-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/spring-aop/6.2.19/spring-aop-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-config/6.5.11/spring-security-config-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-core/6.5.11/spring-security-core-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-crypto/6.5.11/spring-security-crypto-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-web/6.5.11/spring-security-web-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.5.16/spring-boot-starter-validation-3.5.16.jar:/tmp/home/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.55/tomcat-embed-el-10.1.55.jar:/tmp/home/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.3.Final/hibernate-validator-8.0.3.Final.jar:/tmp/home/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/tmp/home/.m2/repository/org/jboss/logging/jboss-logging/3.6.3.Final/jboss-logging-3.6.3.Final.jar:/tmp/home/.m2/repository/com/fasterxml/classmate/1.7.3/classmate-1.7.3.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.5.16/spring-boot-starter-jdbc-3.5.16.jar:/tmp/home/.m2/repository/com/zaxxer/HikariCP/6.3.3/HikariCP-6.3.3.jar:/tmp/home/.m2/repository/org/slf4j/slf4j-api/2.0.18/slf4j-api-2.0.18.jar:/tmp/home/.m2/repository/org/springframework/spring-jdbc/6.2.19/spring-jdbc-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-tx/6.2.19/spring-tx-6.2.19.jar:/tmp/home/.m2/repository/org/postgresql/postgresql/42.7.11/postgresql-42.7.11.jar:/tmp/home/.m2/repository/org/flywaydb/flyway-core/11.7.2/flyway-core-11.7.2.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.21.4/jackson-dataformat-toml-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.21.4/jackson-core-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.21.4/jackson-datatype-jsr310-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21.jar:/tmp/home/.m2/repository/org/flywaydb/flyway-database-postgresql/11.7.2/flyway-database-postgresql-11.7.2.jar:/tmp/home/.m2/repository/io/jsonwebtoken/jjwt-api/0.12.6/jjwt-api-0.12.6.jar:/tmp/home/.m2/repository/io/jsonwebtoken/jjwt-impl/0.12.6/jjwt-impl-0.12.6.jar:/tmp/home/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.12.6/jjwt-jackson-0.12.6.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.21.4/jackson-databind-2.21.4.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.5.16/spring-boot-starter-test-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-test/3.5.16/spring-boot-test-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.5.16/spring-boot-test-autoconfigure-3.5.16.jar:/tmp/home/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/tmp/home/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.5/jakarta.xml.bind-api-4.0.5.jar:/tmp/home/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.4/jakarta.activation-api-2.1.4.jar:/tmp/home/.m2/repository/net/minidev/json-smart/2.5.2/json-smart-2.5.2.jar:/tmp/home/.m2/repository/net/minidev/accessors-smart/2.5.2/accessors-smart-2.5.2.jar:/tmp/home/.m2/repository/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar:/tmp/home/.m2/repository/org/assertj/assertj-core/3.27.7/assertj-core-3.27.7.jar:/tmp/home/.m2/repository/net/bytebuddy/byte-buddy/1.17.8/byte-buddy-1.17.8.jar:/tmp/home/.m2/repository/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/tmp/home/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter/5.12.2/junit-jupiter-5.12.2.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.12.2/junit-jupiter-api-5.12.2.jar:/tmp/home/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/tmp/home/.m2/repository/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.jar:/tmp/home/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.12.2/junit-jupiter-params-5.12.2.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.12.2/junit-jupiter-engine-5.12.2.jar:/tmp/home/.m2/repository/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.jar:/tmp/home/.m2/repository/org/mockito/mockito-core/5.17.0/mockito-core-5.17.0.jar:/tmp/home/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.jar:/tmp/home/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/tmp/home/.m2/repository/org/mockito/mockito-junit-jupiter/5.17.0/mockito-junit-jupiter-5.17.0.jar:/tmp/home/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/tmp/home/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/tmp/home/.m2/repository/org/springframework/spring-core/6.2.19/spring-core-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-jcl/6.2.19/spring-jcl-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-test/6.2.19/spring-test-6.2.19.jar:/tmp/home/.m2/repository/org/xmlunit/xmlunit-core/2.10.4/xmlunit-core-2.10.4.jar:/tmp/home/.m2/repository/org/testcontainers/postgresql/1.21.4/postgresql-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/jdbc/1.21.4/jdbc-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/database-commons/1.21.4/database-commons-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/junit-jupiter/1.21.4/junit-jupiter-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/testcontainers/1.21.4/testcontainers-1.21.4.jar:/tmp/home/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/tmp/home/.m2/repository/org/hamcrest/hamcrest-core/3.0/hamcrest-core-3.0.jar:/tmp/home/.m2/repository/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar:/tmp/home/.m2/repository/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.jar:/tmp/home/.m2/repository/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar:/tmp/home/.m2/repository/com/github/docker-java/docker-java-api/3.4.2/docker-java-api-3.4.2.jar:/tmp/home/.m2/repository/com/github/docker-java/docker-java-transport-zerodep/3.4.2/docker-java-transport-zerodep-3.4.2.jar:/tmp/home/.m2/repository/com/github/docker-java/docker-java-transport/3.4.2/docker-java-transport-3.4.2.jar:/tmp/home/.m2/repository/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar:"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="catalina.useNaming" value="false"/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="Etc/UTC"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Linux"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="APPLICATION_NAME" value="oyunport"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="/opt/java/openjdk/lib"/>
+    <property name="sun.java.command" value="/workspace/backend/target/surefire/surefirebooter-20261123125935105_3.jar /workspace/backend/target/surefire 2026-11-23T12-59-35_054-jvmRun1 surefire-20261123125935105_1tmp surefire_0-20261123125935105_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/workspace/backend/target/test-classes:/workspace/backend/target/classes:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-web/3.5.16/spring-boot-starter-web-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter/3.5.16/spring-boot-starter-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot/3.5.16/spring-boot-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/3.5.16/spring-boot-autoconfigure-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-logging/3.5.16/spring-boot-starter-logging-3.5.16.jar:/tmp/home/.m2/repository/ch/qos/logback/logback-classic/1.5.34/logback-classic-1.5.34.jar:/tmp/home/.m2/repository/ch/qos/logback/logback-core/1.5.34/logback-core-1.5.34.jar:/tmp/home/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.24.3/log4j-to-slf4j-2.24.3.jar:/tmp/home/.m2/repository/org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar:/tmp/home/.m2/repository/org/slf4j/jul-to-slf4j/2.0.18/jul-to-slf4j-2.0.18.jar:/tmp/home/.m2/repository/jakarta/annotation/jakarta.annotation-api/2.1.1/jakarta.annotation-api-2.1.1.jar:/tmp/home/.m2/repository/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-json/3.5.16/spring-boot-starter-json-3.5.16.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.21.4/jackson-datatype-jdk8-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.21.4/jackson-module-parameter-names-2.21.4.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/3.5.16/spring-boot-starter-tomcat-3.5.16.jar:/tmp/home/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.55/tomcat-embed-core-10.1.55.jar:/tmp/home/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.55/tomcat-embed-websocket-10.1.55.jar:/tmp/home/.m2/repository/org/springframework/spring-web/6.2.19/spring-web-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-beans/6.2.19/spring-beans-6.2.19.jar:/tmp/home/.m2/repository/io/micrometer/micrometer-observation/1.15.12/micrometer-observation-1.15.12.jar:/tmp/home/.m2/repository/io/micrometer/micrometer-commons/1.15.12/micrometer-commons-1.15.12.jar:/tmp/home/.m2/repository/org/springframework/spring-webmvc/6.2.19/spring-webmvc-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-context/6.2.19/spring-context-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-expression/6.2.19/spring-expression-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-security/3.5.16/spring-boot-starter-security-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/spring-aop/6.2.19/spring-aop-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-config/6.5.11/spring-security-config-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-core/6.5.11/spring-security-core-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-crypto/6.5.11/spring-security-crypto-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/security/spring-security-web/6.5.11/spring-security-web-6.5.11.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-validation/3.5.16/spring-boot-starter-validation-3.5.16.jar:/tmp/home/.m2/repository/org/apache/tomcat/embed/tomcat-embed-el/10.1.55/tomcat-embed-el-10.1.55.jar:/tmp/home/.m2/repository/org/hibernate/validator/hibernate-validator/8.0.3.Final/hibernate-validator-8.0.3.Final.jar:/tmp/home/.m2/repository/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/tmp/home/.m2/repository/org/jboss/logging/jboss-logging/3.6.3.Final/jboss-logging-3.6.3.Final.jar:/tmp/home/.m2/repository/com/fasterxml/classmate/1.7.3/classmate-1.7.3.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-jdbc/3.5.16/spring-boot-starter-jdbc-3.5.16.jar:/tmp/home/.m2/repository/com/zaxxer/HikariCP/6.3.3/HikariCP-6.3.3.jar:/tmp/home/.m2/repository/org/slf4j/slf4j-api/2.0.18/slf4j-api-2.0.18.jar:/tmp/home/.m2/repository/org/springframework/spring-jdbc/6.2.19/spring-jdbc-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-tx/6.2.19/spring-tx-6.2.19.jar:/tmp/home/.m2/repository/org/postgresql/postgresql/42.7.11/postgresql-42.7.11.jar:/tmp/home/.m2/repository/org/flywaydb/flyway-core/11.7.2/flyway-core-11.7.2.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-toml/2.21.4/jackson-dataformat-toml-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.21.4/jackson-core-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.21.4/jackson-datatype-jsr310-2.21.4.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21.jar:/tmp/home/.m2/repository/org/flywaydb/flyway-database-postgresql/11.7.2/flyway-database-postgresql-11.7.2.jar:/tmp/home/.m2/repository/io/jsonwebtoken/jjwt-api/0.12.6/jjwt-api-0.12.6.jar:/tmp/home/.m2/repository/io/jsonwebtoken/jjwt-impl/0.12.6/jjwt-impl-0.12.6.jar:/tmp/home/.m2/repository/io/jsonwebtoken/jjwt-jackson/0.12.6/jjwt-jackson-0.12.6.jar:/tmp/home/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.21.4/jackson-databind-2.21.4.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-starter-test/3.5.16/spring-boot-starter-test-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-test/3.5.16/spring-boot-test-3.5.16.jar:/tmp/home/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/3.5.16/spring-boot-test-autoconfigure-3.5.16.jar:/tmp/home/.m2/repository/com/jayway/jsonpath/json-path/2.9.0/json-path-2.9.0.jar:/tmp/home/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/4.0.5/jakarta.xml.bind-api-4.0.5.jar:/tmp/home/.m2/repository/jakarta/activation/jakarta.activation-api/2.1.4/jakarta.activation-api-2.1.4.jar:/tmp/home/.m2/repository/net/minidev/json-smart/2.5.2/json-smart-2.5.2.jar:/tmp/home/.m2/repository/net/minidev/accessors-smart/2.5.2/accessors-smart-2.5.2.jar:/tmp/home/.m2/repository/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar:/tmp/home/.m2/repository/org/assertj/assertj-core/3.27.7/assertj-core-3.27.7.jar:/tmp/home/.m2/repository/net/bytebuddy/byte-buddy/1.17.8/byte-buddy-1.17.8.jar:/tmp/home/.m2/repository/org/awaitility/awaitility/4.2.2/awaitility-4.2.2.jar:/tmp/home/.m2/repository/org/hamcrest/hamcrest/3.0/hamcrest-3.0.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter/5.12.2/junit-jupiter-5.12.2.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.12.2/junit-jupiter-api-5.12.2.jar:/tmp/home/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/tmp/home/.m2/repository/org/junit/platform/junit-platform-commons/1.12.2/junit-platform-commons-1.12.2.jar:/tmp/home/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.12.2/junit-jupiter-params-5.12.2.jar:/tmp/home/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.12.2/junit-jupiter-engine-5.12.2.jar:/tmp/home/.m2/repository/org/junit/platform/junit-platform-engine/1.12.2/junit-platform-engine-1.12.2.jar:/tmp/home/.m2/repository/org/mockito/mockito-core/5.17.0/mockito-core-5.17.0.jar:/tmp/home/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.8/byte-buddy-agent-1.17.8.jar:/tmp/home/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/tmp/home/.m2/repository/org/mockito/mockito-junit-jupiter/5.17.0/mockito-junit-jupiter-5.17.0.jar:/tmp/home/.m2/repository/org/skyscreamer/jsonassert/1.5.3/jsonassert-1.5.3.jar:/tmp/home/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar:/tmp/home/.m2/repository/org/springframework/spring-core/6.2.19/spring-core-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-jcl/6.2.19/spring-jcl-6.2.19.jar:/tmp/home/.m2/repository/org/springframework/spring-test/6.2.19/spring-test-6.2.19.jar:/tmp/home/.m2/repository/org/xmlunit/xmlunit-core/2.10.4/xmlunit-core-2.10.4.jar:/tmp/home/.m2/repository/org/testcontainers/postgresql/1.21.4/postgresql-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/jdbc/1.21.4/jdbc-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/database-commons/1.21.4/database-commons-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/junit-jupiter/1.21.4/junit-jupiter-1.21.4.jar:/tmp/home/.m2/repository/org/testcontainers/testcontainers/1.21.4/testcontainers-1.21.4.jar:/tmp/home/.m2/repository/junit/junit/4.13.2/junit-4.13.2.jar:/tmp/home/.m2/repository/org/hamcrest/hamcrest-core/3.0/hamcrest-core-3.0.jar:/tmp/home/.m2/repository/org/apache/commons/commons-compress/1.24.0/commons-compress-1.24.0.jar:/tmp/home/.m2/repository/org/rnorth/duct-tape/duct-tape/1.0.8/duct-tape-1.0.8.jar:/tmp/home/.m2/repository/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar:/tmp/home/.m2/repository/com/github/docker-java/docker-java-api/3.4.2/docker-java-api-3.4.2.jar:/tmp/home/.m2/repository/com/github/docker-java/docker-java-transport-zerodep/3.4.2/docker-java-transport-zerodep-3.4.2.jar:/tmp/home/.m2/repository/com/github/docker-java/docker-java-transport/3.4.2/docker-java-transport-3.4.2.jar:/tmp/home/.m2/repository/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/ubuntu"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2026-08-18"/>
+    <property name="java.home" value="/opt/java/openjdk"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/workspace/backend"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="/workspace/backend/target/surefire/surefirebooter-20261123125935105_3.jar"/>
+    <property name="polyglot.engine.WarnInterpreterOnly" value="false"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.12.1+1-LTS"/>
+    <property name="user.name" value="ubuntu"/>
+    <property name="stdout.encoding" value="UTF-8"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="7.0.0-42-generic"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-21.0.12.1+1"/>
+    <property name="localRepository" value="/tmp/home/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="catalina.home" value="/tmp/tomcat.0.5383207723994885577"/>
+    <property name="java.version" value="21.0.12.1"/>
+    <property name="user.dir" value="/workspace/backend"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="100"/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="catalina.base" value="/tmp/tomcat.0.5383207723994885577"/>
+    <property name="native.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="UTF-8"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="21.0.12.1+1-LTS"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="maven.repo.local" value="/tmp/home/.m2/repository"/>
+    <property name="java.class.version" value="65.0"/>
+    <property name="LOGGED_APPLICATION_NAME" value="[oyunport] "/>
+  </properties>
+  <testcase name="successfulPurchaseEndToEnd" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.207">
+    <system-out><![CDATA[2026-11-23T12:59:51.652Z  INFO 100 --- [oyunport] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [tr.edu.etu.oyunport.CheckoutIT]: CheckoutIT does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-23T12:59:51.654Z  INFO 100 --- [oyunport] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration tr.edu.etu.oyunport.OyunPortApplication for test class tr.edu.etu.oyunport.CheckoutIT
+2026-11-23T12:59:51.799Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=223 checkoutKey=257b607f-9dc9-457f-b81f-98b08b52bfc1 products=[59, 60]
+2026-11-23T12:59:51.802Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=228 items=2
+2026-11-23T12:59:51.809Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=223 order=228 requestKey=7b7763c5-7dda-4b9f-a1bb-431cebfe1b24 outcome=SUCCESS
+2026-11-23T12:59:51.814Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=228 payment=219 libraryEntries=2
+]]></system-out>
+  </testcase>
+  <testcase name="concurrentPaymentsSerializedByUserLock" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.202">
+    <system-out><![CDATA[2026-11-23T12:59:51.978Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=224 checkoutKey=b7da7619-74ec-4d45-8484-67f4695b3986 products=[61]
+2026-11-23T12:59:51.981Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=229 items=1
+2026-11-23T12:59:51.987Z  INFO 100 --- [oyunport] [o-auto-1-exec-1] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=224 checkoutKey=98bb5366-b23b-47b8-afc3-c0f665436a8b products=[61, 62]
+2026-11-23T12:59:51.991Z  INFO 100 --- [oyunport] [o-auto-1-exec-1] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=230 items=2
+2026-11-23T12:59:52.002Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=224 order=229 requestKey=838a9989-e7c5-4b9e-a3af-7d6521fd2c9c outcome=SUCCESS
+2026-11-23T12:59:52.014Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=224 order=230 requestKey=33a66203-578d-46d3-a82a-0f6894a976c5 outcome=SUCCESS
+2026-11-23T12:59:52.018Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=229 payment=220 libraryEntries=1
+]]></system-out>
+  </testcase>
+  <testcase name="uniqueConstraintIsLastLineOfDefence" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.699">
+    <system-out><![CDATA[2026-11-23T12:59:52.195Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=225 checkoutKey=dbd24412-b431-4fbb-ba6a-44716d0aea6c products=[63]
+2026-11-23T12:59:52.196Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=231 items=1
+2026-11-23T12:59:52.201Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=225 checkoutKey=8b22ca56-3eb4-4466-a52e-7dc26fef2fca products=[63]
+2026-11-23T12:59:52.202Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=232 items=1
+]]></system-out>
+  </testcase>
+  <testcase name="completedAndCancelledOrdersAreFinal" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.176">
+    <system-out><![CDATA[2026-11-23T12:59:52.901Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=226 checkoutKey=d369df08-c020-4040-90a9-9e78cc22fd49 products=[64]
+2026-11-23T12:59:52.903Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=233 items=1
+2026-11-23T12:59:52.908Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=226 order=233 requestKey=a5a82268-cbe3-433a-ba95-97a976b3f1a8 outcome=SUCCESS
+2026-11-23T12:59:52.910Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=233 payment=223 libraryEntries=1
+2026-11-23T12:59:52.913Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=226 order=233 requestKey=3f6f904a-673a-486e-9ac2-0eaea8bfa917 outcome=SUCCESS
+2026-11-23T12:59:52.919Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=226 checkoutKey=22476e14-863f-4954-ab94-8d3cb05507f2 products=[65]
+2026-11-23T12:59:52.920Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=234 items=1
+2026-11-23T12:59:52.928Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : Sipariş iptal edildi order=234 user=226
+2026-11-23T12:59:52.939Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=226 order=234 requestKey=141f27ff-3b1f-43f4-8253-7bb5a9fcdb8b outcome=SUCCESS
+]]></system-out>
+  </testcase>
+  <testcase name="priceChangeDoesNotAffectPlacedOrder" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.148">
+    <system-out><![CDATA[2026-11-23T12:59:53.065Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=227 checkoutKey=7d4c82db-90f3-4c65-be59-0a6911be02e3 products=[66]
+2026-11-23T12:59:53.067Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=235 items=1
+2026-11-23T12:59:53.080Z  INFO 100 --- [oyunport] [o-auto-1-exec-7] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=227 order=235 requestKey=85080b45-e8d9-498a-b507-2d1509b929b1 outcome=SUCCESS
+2026-11-23T12:59:53.082Z  INFO 100 --- [oyunport] [o-auto-1-exec-7] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=235 payment=224 libraryEntries=1
+]]></system-out>
+  </testcase>
+  <testcase name="secondPendingOrderWithSameProductRejected" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.149">
+    <system-out><![CDATA[2026-11-23T12:59:53.194Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=228 checkoutKey=b491461f-7f55-4170-b80b-bf77262a3991 products=[67]
+2026-11-23T12:59:53.195Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=236 items=1
+2026-11-23T12:59:53.199Z  INFO 100 --- [oyunport] [o-auto-1-exec-1] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=228 checkoutKey=c00cf619-4a9a-48a0-acfb-b83abe08c88c products=[67]
+2026-11-23T12:59:53.200Z  INFO 100 --- [oyunport] [o-auto-1-exec-1] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=237 items=1
+2026-11-23T12:59:53.204Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=228 order=236 requestKey=a26f0413-0259-4872-98b6-caedae25e6e5 outcome=SUCCESS
+2026-11-23T12:59:53.206Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=236 payment=225 libraryEntries=1
+2026-11-23T12:59:53.209Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=228 order=237 requestKey=7b4b7ccf-f0e6-48da-8dde-b392689a30b6 outcome=SUCCESS
+]]></system-out>
+  </testcase>
+  <testcase name="dlcAfterOwningBaseGame" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.142">
+    <system-out><![CDATA[2026-11-23T12:59:53.362Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=229 checkoutKey=ebcfdeeb-31f6-4519-82d6-42a5a6cc6db7 products=[68]
+2026-11-23T12:59:53.364Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=238 items=1
+2026-11-23T12:59:53.369Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=229 order=238 requestKey=22bf49e2-5cf4-4555-8a67-1eebe3025fc0 outcome=SUCCESS
+2026-11-23T12:59:53.372Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=238 payment=226 libraryEntries=1
+2026-11-23T12:59:53.375Z  INFO 100 --- [oyunport] [o-auto-1-exec-7] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=229 checkoutKey=58f1ccd0-b427-4657-b28a-cc112c48bd05 products=[69]
+2026-11-23T12:59:53.377Z  INFO 100 --- [oyunport] [o-auto-1-exec-7] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=239 items=1
+2026-11-23T12:59:53.382Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=229 order=239 requestKey=60526b63-0821-4c35-a83f-9112dadd2a74 outcome=SUCCESS
+2026-11-23T12:59:53.384Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=239 payment=227 libraryEntries=1
+]]></system-out>
+  </testcase>
+  <testcase name="paymentRequestKeyIdempotency" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.172">
+    <system-out><![CDATA[2026-11-23T12:59:53.503Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=230 checkoutKey=7ed81108-8ed9-45e4-b011-7bd5cdc78a97 products=[70]
+2026-11-23T12:59:53.504Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=240 items=1
+2026-11-23T12:59:53.508Z  INFO 100 --- [oyunport] [o-auto-1-exec-1] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=230 order=240 requestKey=cf897cd7-c9da-4cbc-bec6-47ceb43b67a1 outcome=SUCCESS
+2026-11-23T12:59:53.509Z  INFO 100 --- [oyunport] [o-auto-1-exec-1] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=240 payment=228 libraryEntries=1
+2026-11-23T12:59:53.512Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=230 order=240 requestKey=cf897cd7-c9da-4cbc-bec6-47ceb43b67a1 outcome=SUCCESS
+2026-11-23T12:59:53.513Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T2 idempotent replay payment=228
+2026-11-23T12:59:53.521Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=230 checkoutKey=233d8619-4f5f-4477-9a27-a619bbeb2c62 products=[71]
+2026-11-23T12:59:53.524Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=241 items=1
+2026-11-23T12:59:53.529Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=230 order=241 requestKey=fbdcdc31-d2be-4002-9d0b-7e53e99f4d6a outcome=INSUFFICIENT_FUNDS
+2026-11-23T12:59:53.531Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (FAILED kaydı) order=241 payment=229
+2026-11-23T12:59:53.534Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=230 order=241 requestKey=fbdcdc31-d2be-4002-9d0b-7e53e99f4d6a outcome=SUCCESS
+2026-11-23T12:59:53.535Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T2 idempotent replay payment=229
+2026-11-23T12:59:53.556Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=230 order=241 requestKey=cf897cd7-c9da-4cbc-bec6-47ceb43b67a1 outcome=SUCCESS
+]]></system-out>
+  </testcase>
+  <testcase name="cannotAccessOtherUsersOrder" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.215">
+    <system-out><![CDATA[2026-11-23T12:59:53.752Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=231 checkoutKey=f1ca07ed-c26a-409c-a187-6d6dcaa9835b products=[72]
+2026-11-23T12:59:53.753Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=242 items=1
+2026-11-23T12:59:53.758Z  INFO 100 --- [oyunport] [o-auto-1-exec-1] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=232 order=242 requestKey=0bee90be-9cd2-4b8a-adcb-7e5d619cb0e0 outcome=SUCCESS
+]]></system-out>
+  </testcase>
+  <testcase name="cartValidationStatuses" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.179">
+    <system-out><![CDATA[2026-11-23T12:59:53.934Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=233 checkoutKey=35674719-e50f-44d7-904e-a475c5ee4bbb products=[73]
+2026-11-23T12:59:53.936Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=243 items=1
+2026-11-23T12:59:53.940Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=233 order=243 requestKey=ff0c8484-985d-49da-b680-1eb374bf05cb outcome=SUCCESS
+2026-11-23T12:59:53.941Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=243 payment=230 libraryEntries=1
+2026-11-23T12:59:53.947Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=233 checkoutKey=d9abc885-a12d-4784-a1f1-cefe6c3009ba products=[74]
+]]></system-out>
+  </testcase>
+  <testcase name="rollbackLeavesNoPartialRecords" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.228">
+    <system-out><![CDATA[2026-11-23T12:59:54.099Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=234 checkoutKey=da28026b-65d9-4f32-9840-51001e435795 products=[76, 77]
+2026-11-23T12:59:54.101Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=244 items=2
+2026-11-23T12:59:54.105Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=234 order=244 requestKey=7ac2ae22-4d48-4867-aba3-9b3f6718d83e outcome=SUCCESS
+2026-11-23T12:59:54.108Z ERROR 100 --- [oyunport] [o-auto-1-exec-3] t.e.e.o.common.GlobalExceptionHandler    : Beklenmeyen hata
+
+java.lang.IllegalStateException: TEST: 1. kütüphane kaydından sonra kasıtlı hata
+	at tr.edu.etu.oyunport.support.ArmableCheckoutHooks.afterLibraryEntryInserted(ArmableCheckoutHooks.java:45) ~[test-classes/:na]
+	at tr.edu.etu.oyunport.order.CheckoutService.lambda$pay$9(CheckoutService.java:216) ~[classes/:na]
+	at tr.edu.etu.oyunport.db.Db.inTransaction(Db.java:74) ~[classes/:na]
+	at tr.edu.etu.oyunport.db.Db.customer(Db.java:46) ~[classes/:na]
+	at tr.edu.etu.oyunport.order.CheckoutService.pay(CheckoutService.java:135) ~[classes/:na]
+	at tr.edu.etu.oyunport.order.OrderController.pay(OrderController.java:58) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.55.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.55.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:370) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at tr.edu.etu.oyunport.auth.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:36) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:379) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.5.11.jar:6.5.11]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319) ~[spring-security-config-6.5.11.jar:6.5.11]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240) ~[spring-security-config-6.5.11.jar:6.5.11]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1272) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1797) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.55.jar:10.1.55]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-11-23T12:59:54.167Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=234 order=244 requestKey=c9d1dce8-b901-449d-9f8f-9f4f6362f93b outcome=SUCCESS
+2026-11-23T12:59:54.170Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=244 payment=232 libraryEntries=2
+]]></system-out>
+  </testcase>
+  <testcase name="anonymousCannotOrder" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.011"/>
+  <testcase name="dlcRequiresBaseGame" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.198">
+    <system-out><![CDATA[2026-11-23T12:59:54.358Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=235 checkoutKey=e712302f-fc9f-4bb7-b82a-db88d2f66891 products=[79]
+2026-11-23T12:59:54.373Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=235 checkoutKey=1de5d603-cd91-4cf8-9840-274dbbbba594 products=[79, 78]
+2026-11-23T12:59:54.376Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=245 items=2
+2026-11-23T12:59:54.382Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=235 order=245 requestKey=ff478eed-225d-47c0-8c37-d42831939331 outcome=SUCCESS
+2026-11-23T12:59:54.384Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=245 payment=233 libraryEntries=2
+]]></system-out>
+  </testcase>
+  <testcase name="paymentAmountMustMatchItems" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.17">
+    <system-out><![CDATA[2026-11-23T12:59:54.527Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=236 checkoutKey=7111213e-4776-4ea4-8408-1453e9fc18c8 products=[80]
+2026-11-23T12:59:54.529Z  INFO 100 --- [oyunport] [o-auto-1-exec-2] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=246 items=1
+]]></system-out>
+  </testcase>
+  <testcase name="failedPaymentThenRetry" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.194">
+    <system-out><![CDATA[2026-11-23T12:59:54.691Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=237 checkoutKey=676ed020-e603-4bbd-87b2-7402434d3a22 products=[81]
+2026-11-23T12:59:54.693Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=247 items=1
+2026-11-23T12:59:54.697Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=237 order=247 requestKey=182cdffd-433a-4d7a-9682-3eb7585cc702 outcome=CARD_DECLINED
+2026-11-23T12:59:54.698Z  INFO 100 --- [oyunport] [o-auto-1-exec-5] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (FAILED kaydı) order=247 payment=235
+2026-11-23T12:59:54.738Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=237 order=247 requestKey=8289a030-bfa5-4934-b2de-413260d55187 outcome=SUCCESS
+2026-11-23T12:59:54.742Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=247 payment=236 libraryEntries=1
+]]></system-out>
+  </testcase>
+  <testcase name="doublePurchaseRejectedAtT1" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.136">
+    <system-out><![CDATA[2026-11-23T12:59:54.880Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=238 checkoutKey=99a6cc9b-05db-40a6-853e-0ba217a0996b products=[82]
+2026-11-23T12:59:54.881Z  INFO 100 --- [oyunport] [o-auto-1-exec-8] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=248 items=1
+2026-11-23T12:59:54.886Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T2 BEGIN user=238 order=248 requestKey=17434603-2293-4f56-a324-96578fbbe8a3 outcome=SUCCESS
+2026-11-23T12:59:54.888Z  INFO 100 --- [oyunport] [o-auto-1-exec-9] t.e.etu.oyunport.order.CheckoutService   : T2 COMMIT (SUCCESS) order=248 payment=237 libraryEntries=1
+2026-11-23T12:59:54.891Z  INFO 100 --- [oyunport] [-auto-1-exec-10] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=238 checkoutKey=7c6b6577-9672-48e5-9f48-47d4761ff9c9 products=[82]
+]]></system-out>
+  </testcase>
+  <testcase name="checkoutKeyIdempotency" classname="tr.edu.etu.oyunport.CheckoutIT" time="0.202">
+    <system-out><![CDATA[2026-11-23T12:59:55.009Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=239 checkoutKey=02ba8c9d-ded1-448d-b510-d570ff088cfb products=[83]
+2026-11-23T12:59:55.011Z  INFO 100 --- [oyunport] [o-auto-1-exec-3] t.e.etu.oyunport.order.CheckoutService   : T1 COMMIT order=249 items=1
+2026-11-23T12:59:55.016Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=239 checkoutKey=02ba8c9d-ded1-448d-b510-d570ff088cfb products=[83]
+2026-11-23T12:59:55.017Z  INFO 100 --- [oyunport] [o-auto-1-exec-4] t.e.etu.oyunport.order.CheckoutService   : T1 idempotent replay order=249
+2026-11-23T12:59:55.098Z  INFO 100 --- [oyunport] [o-auto-1-exec-6] t.e.etu.oyunport.order.CheckoutService   : T1 BEGIN user=240 checkoutKey=02ba8c9d-ded1-448d-b510-d570ff088cfb products=[83]
+]]></system-out>
+  </testcase>
+</testsuite>

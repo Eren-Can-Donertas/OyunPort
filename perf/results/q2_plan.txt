@@ -1,0 +1,87 @@
+# q2 = rpt_q2_genre_top_sellers  tarih=2026-11-23T15:05:15+02:00
+## satır sayısı: 90
+## ilk 5 satır
+ genre_id | genre_name | genre_rank | product_id |                      title                       | units_sold |  revenue  
+----------+------------+------------+------------+--------------------------------------------------+------------+-----------
+        1 | Aksiyon    |          1 |       2997 | Son Pilot #2997                                  |       1118 | 151834.99
+        1 | Aksiyon    |          2 |       2166 | Altın Pilot: Sisli Şövalye #2166                 |        910 | 286624.38
+        1 | Aksiyon    |          3 |       4613 | Gümüş Avcı III: Demir Yollar Hikâye Paketi #4613 |        851 |  76851.79
+        1 | Aksiyon    |          4 |       2070 | Karanlık Vadi #2070                              |        587 | 184322.33
+        1 | Aksiyon    |          5 |       2167 | Lejyon Kronikleri #2167                          |        569 | 181872.26
+(5 rows)
+
+## EXPLAIN (ANALYZE, BUFFERS)
+                                                                                                 QUERY PLAN                                                                                                 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Subquery Scan on ranked  (cost=48580.31..49705.31 rows=30000 width=80) (actual time=435.578..436.164 rows=90 loops=1)
+   Buffers: shared hit=5478 read=119
+   I/O Timings: shared read=0.319
+   ->  WindowAgg  (cost=48580.31..49180.31 rows=30000 width=102) (actual time=435.576..436.150 rows=90 loops=1)
+         Run Condition: (rank() OVER (?) <= 5)
+         Buffers: shared hit=5478 read=119
+         I/O Timings: shared read=0.319
+         ->  Sort  (cost=48580.31..48655.31 rows=30000 width=94) (actual time=435.565..435.822 rows=7741 loops=1)
+               Sort Key: gps.genre_id, gps.units_sold DESC
+               Sort Method: quicksort  Memory: 961kB
+               Buffers: shared hit=5478 read=119
+               I/O Timings: shared read=0.319
+               ->  Subquery Scan on gps  (cost=44999.41..46349.41 rows=30000 width=94) (actual time=430.552..432.896 rows=7741 loops=1)
+                     Buffers: shared hit=5475 read=119
+                     I/O Timings: shared read=0.319
+                     ->  HashAggregate  (cost=44999.41..46349.41 rows=30000 width=94) (actual time=430.551..432.485 rows=7741 loops=1)
+                           Group Key: g.genre_id, p.product_id
+                           Filter: (count(*) >= 25)
+                           Batches: 1  Memory Usage: 7185kB
+                           Rows Removed by Filter: 462
+                           Buffers: shared hit=5475 read=119
+                           I/O Timings: shared read=0.319
+                           ->  Hash Join  (cost=12073.12..35876.18 rows=912323 width=60) (actual time=53.984..290.489 rows=918706 loops=1)
+                                 Hash Cond: (oi.product_id = p.product_id)
+                                 Buffers: shared hit=5475 read=119
+                                 I/O Timings: shared read=0.319
+                                 ->  Hash Join  (cost=11574.15..23558.63 rows=539070 width=14) (actual time=49.496..190.312 rows=539416 loops=1)
+                                       Hash Cond: (oi.order_id = so.order_id)
+                                       Buffers: shared hit=5375 read=73
+                                       I/O Timings: shared read=0.185
+                                       ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=22) (actual time=0.005..23.854 rows=599878 loops=1)
+                                             Buffers: shared hit=4411
+                                       ->  Hash  (cost=8204.27..8204.27 rows=269590 width=8) (actual time=47.997..47.998 rows=269703 loops=1)
+                                             Buckets: 524288  Batches: 1  Memory Usage: 14632kB
+                                             Buffers: shared hit=964 read=73
+                                             I/O Timings: shared read=0.185
+                                             ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..8204.27 rows=269590 width=8) (actual time=0.023..16.422 rows=269703 loops=1)
+                                                   Heap Fetches: 0
+                                                   Buffers: shared hit=964 read=73
+                                                   I/O Timings: shared read=0.185
+                                 ->  Hash  (cost=393.20..393.20 rows=8462 width=62) (actual time=4.437..4.439 rows=8462 loops=1)
+                                       Buckets: 16384  Batches: 1  Memory Usage: 946kB
+                                       Buffers: shared hit=100 read=46
+                                       I/O Timings: shared read=0.134
+                                       ->  Hash Join  (cost=212.91..393.20 rows=8462 width=62) (actual time=0.939..3.085 rows=8462 loops=1)
+                                             Hash Cond: (pg.genre_id = g.genre_id)
+                                             Buffers: shared hit=100 read=46
+                                             I/O Timings: shared read=0.134
+                                             ->  Hash Join  (cost=211.50..364.36 rows=8462 width=53) (actual time=0.915..2.314 rows=8462 loops=1)
+                                                   Hash Cond: (pg.product_id = p.product_id)
+                                                   Buffers: shared hit=99 read=46
+                                                   I/O Timings: shared read=0.134
+                                                   ->  Seq Scan on product_genre pg  (cost=0.00..130.62 rows=8462 width=16) (actual time=0.009..0.455 rows=8462 loops=1)
+                                                         Buffers: shared read=46
+                                                         I/O Timings: shared read=0.134
+                                                   ->  Hash  (cost=149.00..149.00 rows=5000 width=37) (actual time=0.874..0.875 rows=5000 loops=1)
+                                                         Buckets: 8192  Batches: 1  Memory Usage: 405kB
+                                                         Buffers: shared hit=99
+                                                         ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=37) (actual time=0.005..0.316 rows=5000 loops=1)
+                                                               Buffers: shared hit=99
+                                             ->  Hash  (cost=1.18..1.18 rows=18 width=17) (actual time=0.012..0.013 rows=18 loops=1)
+                                                   Buckets: 1024  Batches: 1  Memory Usage: 9kB
+                                                   Buffers: shared hit=1
+                                                   ->  Seq Scan on genre g  (cost=0.00..1.18 rows=18 width=17) (actual time=0.002..0.003 rows=18 loops=1)
+                                                         Buffers: shared hit=1
+ Planning:
+   Buffers: shared hit=607 read=4
+   I/O Timings: shared read=0.015
+ Planning Time: 2.916 ms
+ Execution Time: 438.955 ms
+(70 rows)
+

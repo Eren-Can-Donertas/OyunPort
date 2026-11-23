@@ -1,0 +1,352 @@
+# deney=ix5b_q1_monthly_publishers indeks=ix_product_publisher_release aşama=with  tarih=2026-11-23T15:05:06+02:00
+# sorgu dosyası: perf/queries/ix5b_q1_monthly_publishers.sql  oturum ayarı (PGOPTIONS): yok
+## koşu 1
+                                                                                               QUERY PLAN                                                                                                
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=426282.02..427629.30 rows=538910 width=346) (actual time=564.663..564.672 rows=105 loops=1)
+   Sort Key: ranked.sales_month DESC, ((ranked.revenue_rank)::integer)
+   Sort Method: quicksort  Memory: 34kB
+   Buffers: shared hit=5558
+   ->  Subquery Scan on ranked  (cost=261457.14..288402.64 rows=538910 width=346) (actual time=563.730..564.610 rows=105 loops=1)
+         Buffers: shared hit=5552
+         CTE monthly_publisher
+           ->  HashAggregate  (cost=80521.02..99719.69 rows=538910 width=71) (actual time=549.181..551.334 rows=8605 loops=1)
+                 Group Key: (date_trunc('month'::text, (so.completed_at AT TIME ZONE 'Europe/Istanbul'::text)))::date, pu.publisher_id
+                 Planned Partitions: 8  Batches: 1  Memory Usage: 7185kB
+                 Buffers: shared hit=5549
+                 ->  Hash Join  (cost=11791.07..30671.84 rows=538910 width=37) (actual time=70.548..446.657 rows=539416 loops=1)
+                       Hash Cond: (p.publisher_id = pu.publisher_id)
+                       Buffers: shared hit=5549
+                       ->  Hash Join  (cost=11783.45..25183.77 rows=538910 width=22) (actual time=54.912..256.247 rows=539416 loops=1)
+                             Hash Cond: (oi.product_id = p.product_id)
+                             Buffers: shared hit=5547
+                             ->  Hash Join  (cost=11571.95..23556.43 rows=538910 width=22) (actual time=54.152..200.492 rows=539416 loops=1)
+                                   Hash Cond: (oi.order_id = so.order_id)
+                                   Buffers: shared hit=5448
+                                   ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=22) (actual time=0.006..24.570 rows=599878 loops=1)
+                                         Buffers: shared hit=4411
+                                   ->  Hash  (cost=8203.07..8203.07 rows=269510 width=16) (actual time=52.787..52.787 rows=269703 loops=1)
+                                         Buckets: 524288  Batches: 1  Memory Usage: 16739kB
+                                         Buffers: shared hit=1037
+                                         ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..8203.07 rows=269510 width=16) (actual time=0.028..16.510 rows=269703 loops=1)
+                                               Heap Fetches: 0
+                                               Buffers: shared hit=1037
+                             ->  Hash  (cost=149.00..149.00 rows=5000 width=16) (actual time=0.727..0.728 rows=5000 loops=1)
+                                   Buckets: 8192  Batches: 1  Memory Usage: 299kB
+                                   Buffers: shared hit=99
+                                   ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=16) (actual time=0.009..0.309 rows=5000 loops=1)
+                                         Buffers: shared hit=99
+                       ->  Hash  (cost=4.50..4.50 rows=250 width=27) (actual time=15.452..15.452 rows=250 loops=1)
+                             Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                             Buffers: shared hit=2
+                             ->  Seq Scan on publisher pu  (cost=0.00..4.50 rows=250 width=27) (actual time=15.389..15.412 rows=250 loops=1)
+                                   Buffers: shared hit=2
+         ->  WindowAgg  (cost=161737.45..172515.65 rows=538910 width=350) (actual time=563.723..564.543 rows=105 loops=1)
+               Run Condition: (dense_rank() OVER (?) <= 3)
+               Buffers: shared hit=5552
+               ->  Sort  (cost=161737.45..163084.73 rows=538910 width=342) (actual time=563.702..563.999 rows=8605 loops=1)
+                     Sort Key: mp.sales_month, mp.revenue DESC
+                     Sort Method: quicksort  Memory: 1176kB
+                     Buffers: shared hit=5552
+                     ->  Hash Join  (cost=13479.75..25702.57 rows=538910 width=342) (actual time=554.627..555.970 rows=8605 loops=1)
+                           Hash Cond: (mp.sales_month = mt.sales_month)
+                           Buffers: shared hit=5549
+                           ->  CTE Scan on monthly_publisher mp  (cost=0.00..10778.20 rows=538910 width=310) (actual time=549.184..549.657 rows=8605 loops=1)
+                                 Buffers: shared hit=5549
+                           ->  Hash  (cost=13477.25..13477.25 rows=200 width=36) (actual time=5.418..5.419 rows=35 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                 ->  Subquery Scan on mt  (cost=13472.75..13477.25 rows=200 width=36) (actual time=5.402..5.411 rows=35 loops=1)
+                                       ->  HashAggregate  (cost=13472.75..13475.25 rows=200 width=36) (actual time=5.399..5.406 rows=35 loops=1)
+                                             Group Key: monthly_publisher.sales_month
+                                             Batches: 1  Memory Usage: 48kB
+                                             ->  CTE Scan on monthly_publisher  (cost=0.00..10778.20 rows=538910 width=36) (actual time=0.000..4.082 rows=8605 loops=1)
+ Planning:
+   Buffers: shared hit=573
+ Planning Time: 2.586 ms
+ JIT:
+   Functions: 51
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.655 ms, Inlining 0.000 ms, Optimization 0.613 ms, Emission 14.880 ms, Total 17.148 ms
+ Execution Time: 582.201 ms
+(65 rows)
+
+## koşu 2
+                                                                                               QUERY PLAN                                                                                                
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=426282.02..427629.30 rows=538910 width=346) (actual time=562.527..562.536 rows=105 loops=1)
+   Sort Key: ranked.sales_month DESC, ((ranked.revenue_rank)::integer)
+   Sort Method: quicksort  Memory: 34kB
+   Buffers: shared hit=5558
+   ->  Subquery Scan on ranked  (cost=261457.14..288402.64 rows=538910 width=346) (actual time=561.598..562.476 rows=105 loops=1)
+         Buffers: shared hit=5552
+         CTE monthly_publisher
+           ->  HashAggregate  (cost=80521.02..99719.69 rows=538910 width=71) (actual time=547.152..549.244 rows=8605 loops=1)
+                 Group Key: (date_trunc('month'::text, (so.completed_at AT TIME ZONE 'Europe/Istanbul'::text)))::date, pu.publisher_id
+                 Planned Partitions: 8  Batches: 1  Memory Usage: 7185kB
+                 Buffers: shared hit=5549
+                 ->  Hash Join  (cost=11791.07..30671.84 rows=538910 width=37) (actual time=66.674..442.643 rows=539416 loops=1)
+                       Hash Cond: (p.publisher_id = pu.publisher_id)
+                       Buffers: shared hit=5549
+                       ->  Hash Join  (cost=11783.45..25183.77 rows=538910 width=22) (actual time=51.131..253.036 rows=539416 loops=1)
+                             Hash Cond: (oi.product_id = p.product_id)
+                             Buffers: shared hit=5547
+                             ->  Hash Join  (cost=11571.95..23556.43 rows=538910 width=22) (actual time=50.380..197.582 rows=539416 loops=1)
+                                   Hash Cond: (oi.order_id = so.order_id)
+                                   Buffers: shared hit=5448
+                                   ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=22) (actual time=0.005..24.437 rows=599878 loops=1)
+                                         Buffers: shared hit=4411
+                                   ->  Hash  (cost=8203.07..8203.07 rows=269510 width=16) (actual time=49.093..49.094 rows=269703 loops=1)
+                                         Buckets: 524288  Batches: 1  Memory Usage: 16739kB
+                                         Buffers: shared hit=1037
+                                         ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..8203.07 rows=269510 width=16) (actual time=0.032..15.525 rows=269703 loops=1)
+                                               Heap Fetches: 0
+                                               Buffers: shared hit=1037
+                             ->  Hash  (cost=149.00..149.00 rows=5000 width=16) (actual time=0.719..0.720 rows=5000 loops=1)
+                                   Buckets: 8192  Batches: 1  Memory Usage: 299kB
+                                   Buffers: shared hit=99
+                                   ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=16) (actual time=0.009..0.307 rows=5000 loops=1)
+                                         Buffers: shared hit=99
+                       ->  Hash  (cost=4.50..4.50 rows=250 width=27) (actual time=15.405..15.406 rows=250 loops=1)
+                             Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                             Buffers: shared hit=2
+                             ->  Seq Scan on publisher pu  (cost=0.00..4.50 rows=250 width=27) (actual time=15.341..15.363 rows=250 loops=1)
+                                   Buffers: shared hit=2
+         ->  WindowAgg  (cost=161737.45..172515.65 rows=538910 width=350) (actual time=561.590..562.408 rows=105 loops=1)
+               Run Condition: (dense_rank() OVER (?) <= 3)
+               Buffers: shared hit=5552
+               ->  Sort  (cost=161737.45..163084.73 rows=538910 width=342) (actual time=561.570..561.863 rows=8605 loops=1)
+                     Sort Key: mp.sales_month, mp.revenue DESC
+                     Sort Method: quicksort  Memory: 1176kB
+                     Buffers: shared hit=5552
+                     ->  Hash Join  (cost=13479.75..25702.57 rows=538910 width=342) (actual time=552.539..553.881 rows=8605 loops=1)
+                           Hash Cond: (mp.sales_month = mt.sales_month)
+                           Buffers: shared hit=5549
+                           ->  CTE Scan on monthly_publisher mp  (cost=0.00..10778.20 rows=538910 width=310) (actual time=547.154..547.625 rows=8605 loops=1)
+                                 Buffers: shared hit=5549
+                           ->  Hash  (cost=13477.25..13477.25 rows=200 width=36) (actual time=5.361..5.362 rows=35 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                 ->  Subquery Scan on mt  (cost=13472.75..13477.25 rows=200 width=36) (actual time=5.345..5.353 rows=35 loops=1)
+                                       ->  HashAggregate  (cost=13472.75..13475.25 rows=200 width=36) (actual time=5.342..5.348 rows=35 loops=1)
+                                             Group Key: monthly_publisher.sales_month
+                                             Batches: 1  Memory Usage: 48kB
+                                             ->  CTE Scan on monthly_publisher  (cost=0.00..10778.20 rows=538910 width=36) (actual time=0.000..4.014 rows=8605 loops=1)
+ Planning:
+   Buffers: shared hit=573
+ Planning Time: 5.053 ms
+ JIT:
+   Functions: 51
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.648 ms, Inlining 0.000 ms, Optimization 0.612 ms, Emission 14.805 ms, Total 17.066 ms
+ Execution Time: 579.807 ms
+(65 rows)
+
+## koşu 3
+                                                                                               QUERY PLAN                                                                                                
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=426282.02..427629.30 rows=538910 width=346) (actual time=558.571..558.580 rows=105 loops=1)
+   Sort Key: ranked.sales_month DESC, ((ranked.revenue_rank)::integer)
+   Sort Method: quicksort  Memory: 34kB
+   Buffers: shared hit=5558
+   ->  Subquery Scan on ranked  (cost=261457.14..288402.64 rows=538910 width=346) (actual time=557.653..558.521 rows=105 loops=1)
+         Buffers: shared hit=5552
+         CTE monthly_publisher
+           ->  HashAggregate  (cost=80521.02..99719.69 rows=538910 width=71) (actual time=543.294..545.303 rows=8605 loops=1)
+                 Group Key: (date_trunc('month'::text, (so.completed_at AT TIME ZONE 'Europe/Istanbul'::text)))::date, pu.publisher_id
+                 Planned Partitions: 8  Batches: 1  Memory Usage: 7185kB
+                 Buffers: shared hit=5549
+                 ->  Hash Join  (cost=11791.07..30671.84 rows=538910 width=37) (actual time=66.073..439.763 rows=539416 loops=1)
+                       Hash Cond: (p.publisher_id = pu.publisher_id)
+                       Buffers: shared hit=5549
+                       ->  Hash Join  (cost=11783.45..25183.77 rows=538910 width=22) (actual time=50.423..250.900 rows=539416 loops=1)
+                             Hash Cond: (oi.product_id = p.product_id)
+                             Buffers: shared hit=5547
+                             ->  Hash Join  (cost=11571.95..23556.43 rows=538910 width=22) (actual time=49.664..195.925 rows=539416 loops=1)
+                                   Hash Cond: (oi.order_id = so.order_id)
+                                   Buffers: shared hit=5448
+                                   ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=22) (actual time=0.005..24.342 rows=599878 loops=1)
+                                         Buffers: shared hit=4411
+                                   ->  Hash  (cost=8203.07..8203.07 rows=269510 width=16) (actual time=48.259..48.260 rows=269703 loops=1)
+                                         Buckets: 524288  Batches: 1  Memory Usage: 16739kB
+                                         Buffers: shared hit=1037
+                                         ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..8203.07 rows=269510 width=16) (actual time=0.030..15.343 rows=269703 loops=1)
+                                               Heap Fetches: 0
+                                               Buffers: shared hit=1037
+                             ->  Hash  (cost=149.00..149.00 rows=5000 width=16) (actual time=0.725..0.726 rows=5000 loops=1)
+                                   Buckets: 8192  Batches: 1  Memory Usage: 299kB
+                                   Buffers: shared hit=99
+                                   ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=16) (actual time=0.009..0.308 rows=5000 loops=1)
+                                         Buffers: shared hit=99
+                       ->  Hash  (cost=4.50..4.50 rows=250 width=27) (actual time=15.513..15.513 rows=250 loops=1)
+                             Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                             Buffers: shared hit=2
+                             ->  Seq Scan on publisher pu  (cost=0.00..4.50 rows=250 width=27) (actual time=15.451..15.473 rows=250 loops=1)
+                                   Buffers: shared hit=2
+         ->  WindowAgg  (cost=161737.45..172515.65 rows=538910 width=350) (actual time=557.646..558.452 rows=105 loops=1)
+               Run Condition: (dense_rank() OVER (?) <= 3)
+               Buffers: shared hit=5552
+               ->  Sort  (cost=161737.45..163084.73 rows=538910 width=342) (actual time=557.628..557.916 rows=8605 loops=1)
+                     Sort Key: mp.sales_month, mp.revenue DESC
+                     Sort Method: quicksort  Memory: 1176kB
+                     Buffers: shared hit=5552
+                     ->  Hash Join  (cost=13479.75..25702.57 rows=538910 width=342) (actual time=548.593..549.938 rows=8605 loops=1)
+                           Hash Cond: (mp.sales_month = mt.sales_month)
+                           Buffers: shared hit=5549
+                           ->  CTE Scan on monthly_publisher mp  (cost=0.00..10778.20 rows=538910 width=310) (actual time=543.297..543.770 rows=8605 loops=1)
+                                 Buffers: shared hit=5549
+                           ->  Hash  (cost=13477.25..13477.25 rows=200 width=36) (actual time=5.271..5.272 rows=35 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                 ->  Subquery Scan on mt  (cost=13472.75..13477.25 rows=200 width=36) (actual time=5.255..5.263 rows=35 loops=1)
+                                       ->  HashAggregate  (cost=13472.75..13475.25 rows=200 width=36) (actual time=5.253..5.259 rows=35 loops=1)
+                                             Group Key: monthly_publisher.sales_month
+                                             Batches: 1  Memory Usage: 48kB
+                                             ->  CTE Scan on monthly_publisher  (cost=0.00..10778.20 rows=538910 width=36) (actual time=0.001..3.927 rows=8605 loops=1)
+ Planning:
+   Buffers: shared hit=573
+ Planning Time: 2.605 ms
+ JIT:
+   Functions: 51
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.637 ms, Inlining 0.000 ms, Optimization 0.598 ms, Emission 14.918 ms, Total 17.152 ms
+ Execution Time: 575.330 ms
+(65 rows)
+
+## koşu 4
+                                                                                               QUERY PLAN                                                                                                
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=426282.02..427629.30 rows=538910 width=346) (actual time=578.661..578.670 rows=105 loops=1)
+   Sort Key: ranked.sales_month DESC, ((ranked.revenue_rank)::integer)
+   Sort Method: quicksort  Memory: 34kB
+   Buffers: shared hit=5558
+   ->  Subquery Scan on ranked  (cost=261457.14..288402.64 rows=538910 width=346) (actual time=577.724..578.610 rows=105 loops=1)
+         Buffers: shared hit=5552
+         CTE monthly_publisher
+           ->  HashAggregate  (cost=80521.02..99719.69 rows=538910 width=71) (actual time=563.116..565.156 rows=8605 loops=1)
+                 Group Key: (date_trunc('month'::text, (so.completed_at AT TIME ZONE 'Europe/Istanbul'::text)))::date, pu.publisher_id
+                 Planned Partitions: 8  Batches: 1  Memory Usage: 7185kB
+                 Buffers: shared hit=5549
+                 ->  Hash Join  (cost=11791.07..30671.84 rows=538910 width=37) (actual time=67.498..451.224 rows=539416 loops=1)
+                       Hash Cond: (p.publisher_id = pu.publisher_id)
+                       Buffers: shared hit=5549
+                       ->  Hash Join  (cost=11783.45..25183.77 rows=538910 width=22) (actual time=51.867..258.045 rows=539416 loops=1)
+                             Hash Cond: (oi.product_id = p.product_id)
+                             Buffers: shared hit=5547
+                             ->  Hash Join  (cost=11571.95..23556.43 rows=538910 width=22) (actual time=51.119..201.496 rows=539416 loops=1)
+                                   Hash Cond: (oi.order_id = so.order_id)
+                                   Buffers: shared hit=5448
+                                   ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=22) (actual time=0.005..25.057 rows=599878 loops=1)
+                                         Buffers: shared hit=4411
+                                   ->  Hash  (cost=8203.07..8203.07 rows=269510 width=16) (actual time=49.795..49.795 rows=269703 loops=1)
+                                         Buckets: 524288  Batches: 1  Memory Usage: 16739kB
+                                         Buffers: shared hit=1037
+                                         ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..8203.07 rows=269510 width=16) (actual time=0.032..15.637 rows=269703 loops=1)
+                                               Heap Fetches: 0
+                                               Buffers: shared hit=1037
+                             ->  Hash  (cost=149.00..149.00 rows=5000 width=16) (actual time=0.719..0.719 rows=5000 loops=1)
+                                   Buckets: 8192  Batches: 1  Memory Usage: 299kB
+                                   Buffers: shared hit=99
+                                   ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=16) (actual time=0.009..0.309 rows=5000 loops=1)
+                                         Buffers: shared hit=99
+                       ->  Hash  (cost=4.50..4.50 rows=250 width=27) (actual time=15.490..15.490 rows=250 loops=1)
+                             Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                             Buffers: shared hit=2
+                             ->  Seq Scan on publisher pu  (cost=0.00..4.50 rows=250 width=27) (actual time=15.424..15.447 rows=250 loops=1)
+                                   Buffers: shared hit=2
+         ->  WindowAgg  (cost=161737.45..172515.65 rows=538910 width=350) (actual time=577.716..578.542 rows=105 loops=1)
+               Run Condition: (dense_rank() OVER (?) <= 3)
+               Buffers: shared hit=5552
+               ->  Sort  (cost=161737.45..163084.73 rows=538910 width=342) (actual time=577.694..578.000 rows=8605 loops=1)
+                     Sort Key: mp.sales_month, mp.revenue DESC
+                     Sort Method: quicksort  Memory: 1176kB
+                     Buffers: shared hit=5552
+                     ->  Hash Join  (cost=13479.75..25702.57 rows=538910 width=342) (actual time=568.502..569.857 rows=8605 loops=1)
+                           Hash Cond: (mp.sales_month = mt.sales_month)
+                           Buffers: shared hit=5549
+                           ->  CTE Scan on monthly_publisher mp  (cost=0.00..10778.20 rows=538910 width=310) (actual time=563.119..563.594 rows=8605 loops=1)
+                                 Buffers: shared hit=5549
+                           ->  Hash  (cost=13477.25..13477.25 rows=200 width=36) (actual time=5.358..5.360 rows=35 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                 ->  Subquery Scan on mt  (cost=13472.75..13477.25 rows=200 width=36) (actual time=5.343..5.352 rows=35 loops=1)
+                                       ->  HashAggregate  (cost=13472.75..13475.25 rows=200 width=36) (actual time=5.341..5.347 rows=35 loops=1)
+                                             Group Key: monthly_publisher.sales_month
+                                             Batches: 1  Memory Usage: 48kB
+                                             ->  CTE Scan on monthly_publisher  (cost=0.00..10778.20 rows=538910 width=36) (actual time=0.000..4.018 rows=8605 loops=1)
+ Planning:
+   Buffers: shared hit=573
+ Planning Time: 2.407 ms
+ JIT:
+   Functions: 51
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.651 ms, Inlining 0.000 ms, Optimization 0.592 ms, Emission 14.918 ms, Total 17.161 ms
+ Execution Time: 596.219 ms
+(65 rows)
+
+## koşu 5
+                                                                                               QUERY PLAN                                                                                                
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=426282.02..427629.30 rows=538910 width=346) (actual time=570.849..570.864 rows=105 loops=1)
+   Sort Key: ranked.sales_month DESC, ((ranked.revenue_rank)::integer)
+   Sort Method: quicksort  Memory: 34kB
+   Buffers: shared hit=5558
+   ->  Subquery Scan on ranked  (cost=261457.14..288402.64 rows=538910 width=346) (actual time=569.751..570.805 rows=105 loops=1)
+         Buffers: shared hit=5552
+         CTE monthly_publisher
+           ->  HashAggregate  (cost=80521.02..99719.69 rows=538910 width=71) (actual time=555.358..557.365 rows=8605 loops=1)
+                 Group Key: (date_trunc('month'::text, (so.completed_at AT TIME ZONE 'Europe/Istanbul'::text)))::date, pu.publisher_id
+                 Planned Partitions: 8  Batches: 1  Memory Usage: 7185kB
+                 Buffers: shared hit=5549
+                 ->  Hash Join  (cost=11791.07..30671.84 rows=538910 width=37) (actual time=69.573..448.574 rows=539416 loops=1)
+                       Hash Cond: (p.publisher_id = pu.publisher_id)
+                       Buffers: shared hit=5549
+                       ->  Hash Join  (cost=11783.45..25183.77 rows=538910 width=22) (actual time=53.274..257.386 rows=539416 loops=1)
+                             Hash Cond: (oi.product_id = p.product_id)
+                             Buffers: shared hit=5547
+                             ->  Hash Join  (cost=11571.95..23556.43 rows=538910 width=22) (actual time=52.505..201.662 rows=539416 loops=1)
+                                   Hash Cond: (oi.order_id = so.order_id)
+                                   Buffers: shared hit=5448
+                                   ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=22) (actual time=0.005..24.644 rows=599878 loops=1)
+                                         Buffers: shared hit=4411
+                                   ->  Hash  (cost=8203.07..8203.07 rows=269510 width=16) (actual time=51.153..51.154 rows=269703 loops=1)
+                                         Buckets: 524288  Batches: 1  Memory Usage: 16739kB
+                                         Buffers: shared hit=1037
+                                         ->  Index Only Scan using ix_store_order_completed on store_order so  (cost=0.42..8203.07 rows=269510 width=16) (actual time=0.038..15.823 rows=269703 loops=1)
+                                               Heap Fetches: 0
+                                               Buffers: shared hit=1037
+                             ->  Hash  (cost=149.00..149.00 rows=5000 width=16) (actual time=0.737..0.737 rows=5000 loops=1)
+                                   Buckets: 8192  Batches: 1  Memory Usage: 299kB
+                                   Buffers: shared hit=99
+                                   ->  Seq Scan on product p  (cost=0.00..149.00 rows=5000 width=16) (actual time=0.009..0.322 rows=5000 loops=1)
+                                         Buffers: shared hit=99
+                       ->  Hash  (cost=4.50..4.50 rows=250 width=27) (actual time=16.160..16.160 rows=250 loops=1)
+                             Buckets: 1024  Batches: 1  Memory Usage: 23kB
+                             Buffers: shared hit=2
+                             ->  Seq Scan on publisher pu  (cost=0.00..4.50 rows=250 width=27) (actual time=16.097..16.120 rows=250 loops=1)
+                                   Buffers: shared hit=2
+         ->  WindowAgg  (cost=161737.45..172515.65 rows=538910 width=350) (actual time=569.742..570.733 rows=105 loops=1)
+               Run Condition: (dense_rank() OVER (?) <= 3)
+               Buffers: shared hit=5552
+               ->  Sort  (cost=161737.45..163084.73 rows=538910 width=342) (actual time=569.715..570.153 rows=8605 loops=1)
+                     Sort Key: mp.sales_month, mp.revenue DESC
+                     Sort Method: quicksort  Memory: 1176kB
+                     Buffers: shared hit=5552
+                     ->  Hash Join  (cost=13479.75..25702.57 rows=538910 width=342) (actual time=560.697..562.052 rows=8605 loops=1)
+                           Hash Cond: (mp.sales_month = mt.sales_month)
+                           Buffers: shared hit=5549
+                           ->  CTE Scan on monthly_publisher mp  (cost=0.00..10778.20 rows=538910 width=310) (actual time=555.361..555.835 rows=8605 loops=1)
+                                 Buffers: shared hit=5549
+                           ->  Hash  (cost=13477.25..13477.25 rows=200 width=36) (actual time=5.311..5.317 rows=35 loops=1)
+                                 Buckets: 1024  Batches: 1  Memory Usage: 10kB
+                                 ->  Subquery Scan on mt  (cost=13472.75..13477.25 rows=200 width=36) (actual time=5.295..5.304 rows=35 loops=1)
+                                       ->  HashAggregate  (cost=13472.75..13475.25 rows=200 width=36) (actual time=5.293..5.299 rows=35 loops=1)
+                                             Group Key: monthly_publisher.sales_month
+                                             Batches: 1  Memory Usage: 48kB
+                                             ->  CTE Scan on monthly_publisher  (cost=0.00..10778.20 rows=538910 width=36) (actual time=0.000..3.978 rows=8605 loops=1)
+ Planning:
+   Buffers: shared hit=573
+ Planning Time: 2.341 ms
+ JIT:
+   Functions: 51
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 1.622 ms, Inlining 0.000 ms, Optimization 0.597 ms, Emission 15.585 ms, Total 17.804 ms
+ Execution Time: 587.742 ms
+(65 rows)
+

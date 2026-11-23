@@ -1,0 +1,157 @@
+# deney=ix2r_period_sales_rpc11 indeks=ix_store_order_completed aşama=without  tarih=2026-11-23T15:05:11+02:00
+# sorgu dosyası: perf/queries/ix2_period_completed_sales.sql  oturum ayarı (PGOPTIONS): -c random_page_cost=1.1
+## koşu 1
+                                                                                                        QUERY PLAN                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=11410.82..11970.99 rows=2130 width=48) (actual time=18.478..22.152 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=16134
+   ->  Gather Merge  (cost=11410.82..11907.08 rows=4261 width=22) (actual time=18.452..21.721 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=16134
+         ->  Sort  (cost=10410.80..10415.24 rows=1775 width=22) (actual time=13.909..13.958 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 142kB
+               Buffers: shared hit=16134
+               Worker 0:  Sort Method: quicksort  Memory: 110kB
+               Worker 1:  Sort Method: quicksort  Memory: 132kB
+               ->  Nested Loop  (cost=0.42..10315.01 rows=1775 width=22) (actual time=2.353..13.316 rows=1690 loops=3)
+                     Buffers: shared hit=16102
+                     ->  Parallel Seq Scan on store_order so  (cost=0.00..8196.50 rows=888 width=16) (actual time=2.323..9.371 rows=839 loops=3)
+                           Filter: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                           Rows Removed by Filter: 99161
+                           Buffers: shared hit=6009
+                     ->  Index Scan using uq_order_item_order_product on order_item oi  (cost=0.42..2.36 rows=2 width=14) (actual time=0.004..0.004 rows=2 loops=2517)
+                           Index Cond: (order_id = so.order_id)
+                           Buffers: shared hit=10093
+ Planning:
+   Buffers: shared hit=242
+ Planning Time: 0.895 ms
+ Execution Time: 22.293 ms
+(26 rows)
+
+## koşu 2
+                                                                                                        QUERY PLAN                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=11410.82..11970.99 rows=2130 width=48) (actual time=15.060..19.369 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=16134
+   ->  Gather Merge  (cost=11410.82..11907.08 rows=4261 width=22) (actual time=15.033..18.928 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=16134
+         ->  Sort  (cost=10410.80..10415.24 rows=1775 width=22) (actual time=11.478..11.527 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 137kB
+               Buffers: shared hit=16134
+               Worker 0:  Sort Method: quicksort  Memory: 121kB
+               Worker 1:  Sort Method: quicksort  Memory: 125kB
+               ->  Nested Loop  (cost=0.42..10315.01 rows=1775 width=22) (actual time=2.060..10.972 rows=1690 loops=3)
+                     Buffers: shared hit=16102
+                     ->  Parallel Seq Scan on store_order so  (cost=0.00..8196.50 rows=888 width=16) (actual time=2.035..7.770 rows=839 loops=3)
+                           Filter: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                           Rows Removed by Filter: 99161
+                           Buffers: shared hit=6009
+                     ->  Index Scan using uq_order_item_order_product on order_item oi  (cost=0.42..2.36 rows=2 width=14) (actual time=0.003..0.003 rows=2 loops=2517)
+                           Index Cond: (order_id = so.order_id)
+                           Buffers: shared hit=10093
+ Planning:
+   Buffers: shared hit=242
+ Planning Time: 1.347 ms
+ Execution Time: 19.518 ms
+(26 rows)
+
+## koşu 3
+                                                                                                        QUERY PLAN                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=11410.82..11970.99 rows=2130 width=48) (actual time=22.382..26.302 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=16134
+   ->  Gather Merge  (cost=11410.82..11907.08 rows=4261 width=22) (actual time=22.356..25.872 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=16134
+         ->  Sort  (cost=10410.80..10415.24 rows=1775 width=22) (actual time=16.751..16.800 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 194kB
+               Buffers: shared hit=16134
+               Worker 0:  Sort Method: quicksort  Memory: 114kB
+               Worker 1:  Sort Method: quicksort  Memory: 122kB
+               ->  Nested Loop  (cost=0.42..10315.01 rows=1775 width=22) (actual time=3.282..16.075 rows=1690 loops=3)
+                     Buffers: shared hit=16102
+                     ->  Parallel Seq Scan on store_order so  (cost=0.00..8196.50 rows=888 width=16) (actual time=3.229..11.491 rows=839 loops=3)
+                           Filter: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                           Rows Removed by Filter: 99161
+                           Buffers: shared hit=6009
+                     ->  Index Scan using uq_order_item_order_product on order_item oi  (cost=0.42..2.36 rows=2 width=14) (actual time=0.004..0.005 rows=2 loops=2517)
+                           Index Cond: (order_id = so.order_id)
+                           Buffers: shared hit=10093
+ Planning:
+   Buffers: shared hit=242
+ Planning Time: 0.926 ms
+ Execution Time: 26.445 ms
+(26 rows)
+
+## koşu 4
+                                                                                                        QUERY PLAN                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=11410.82..11970.99 rows=2130 width=48) (actual time=15.300..19.023 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=16134
+   ->  Gather Merge  (cost=11410.82..11907.08 rows=4261 width=22) (actual time=15.274..18.591 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=16134
+         ->  Sort  (cost=10410.80..10415.24 rows=1775 width=22) (actual time=11.573..11.621 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 197kB
+               Buffers: shared hit=16134
+               Worker 0:  Sort Method: quicksort  Memory: 105kB
+               Worker 1:  Sort Method: quicksort  Memory: 129kB
+               ->  Nested Loop  (cost=0.42..10315.01 rows=1775 width=22) (actual time=1.910..11.013 rows=1690 loops=3)
+                     Buffers: shared hit=16102
+                     ->  Parallel Seq Scan on store_order so  (cost=0.00..8196.50 rows=888 width=16) (actual time=1.880..7.697 rows=839 loops=3)
+                           Filter: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                           Rows Removed by Filter: 99161
+                           Buffers: shared hit=6009
+                     ->  Index Scan using uq_order_item_order_product on order_item oi  (cost=0.42..2.36 rows=2 width=14) (actual time=0.003..0.003 rows=2 loops=2517)
+                           Index Cond: (order_id = so.order_id)
+                           Buffers: shared hit=10093
+ Planning:
+   Buffers: shared hit=242
+ Planning Time: 0.887 ms
+ Execution Time: 19.153 ms
+(26 rows)
+
+## koşu 5
+                                                                                                        QUERY PLAN                                                                                                         
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=11410.82..11970.99 rows=2130 width=48) (actual time=17.579..22.801 rows=8 loops=1)
+   Group Key: (date_trunc('day'::text, so.completed_at))
+   Buffers: shared hit=16134
+   ->  Gather Merge  (cost=11410.82..11907.08 rows=4261 width=22) (actual time=17.541..22.156 rows=5071 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=16134
+         ->  Sort  (cost=10410.80..10415.24 rows=1775 width=22) (actual time=13.867..13.944 rows=1690 loops=3)
+               Sort Key: (date_trunc('day'::text, so.completed_at)), so.order_id
+               Sort Method: quicksort  Memory: 195kB
+               Buffers: shared hit=16134
+               Worker 0:  Sort Method: quicksort  Memory: 67kB
+               Worker 1:  Sort Method: quicksort  Memory: 194kB
+               ->  Nested Loop  (cost=0.42..10315.01 rows=1775 width=22) (actual time=2.725..13.132 rows=1690 loops=3)
+                     Buffers: shared hit=16102
+                     ->  Parallel Seq Scan on store_order so  (cost=0.00..8196.50 rows=888 width=16) (actual time=2.686..9.393 rows=839 loops=3)
+                           Filter: ((completed_at >= '2026-03-01 21:00:00+00'::timestamp with time zone) AND (completed_at < '2026-03-08 21:00:00+00'::timestamp with time zone) AND ((status)::text = 'COMPLETED'::text))
+                           Rows Removed by Filter: 99161
+                           Buffers: shared hit=6009
+                     ->  Index Scan using uq_order_item_order_product on order_item oi  (cost=0.42..2.36 rows=2 width=14) (actual time=0.004..0.004 rows=2 loops=2517)
+                           Index Cond: (order_id = so.order_id)
+                           Buffers: shared hit=10093
+ Planning:
+   Buffers: shared hit=242
+ Planning Time: 0.913 ms
+ Execution Time: 22.940 ms
+(26 rows)
+

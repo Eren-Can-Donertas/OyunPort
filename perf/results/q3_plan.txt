@@ -1,0 +1,92 @@
+# q3 = rpt_q3_above_average_customers  tarih=2026-11-23T15:05:16+02:00
+## satır sayısı: 13588
+## ilk 5 satır
+ user_id |         email          | display_name | completed_orders | total_spent | avg_customer_spend | spend_ratio 
+---------+------------------------+--------------+------------------+-------------+--------------------+-------------
+       8 | oyuncu8@oyunport.test  | Ozan A.      |               14 |    14287.18 |            5288.31 |        2.70
+      14 | oyuncu14@oyunport.test | Ayşe P.      |                9 |     5894.84 |            5288.31 |        1.11
+      16 | oyuncu16@oyunport.test | Ozan N.      |               13 |    11012.18 |            5288.31 |        2.08
+      17 | oyuncu17@oyunport.test | Elif F.      |               15 |    11359.74 |            5288.31 |        2.15
+      19 | oyuncu19@oyunport.test | İrem A.      |               12 |     8724.79 |            5288.31 |        1.65
+(5 rows)
+
+## EXPLAIN (ANALYZE, BUFFERS)
+                                                                                 QUERY PLAN                                                                                 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ GroupAggregate  (cost=123417.41..129574.80 rows=13334 width=127) (actual time=571.860..679.382 rows=13588 loops=1)
+   Group Key: u.user_id
+   Filter: (sum(oi.unit_price_paid) > $4)
+   Rows Removed by Filter: 24224
+   Buffers: shared hit=21582, temp read=4797 written=4800
+   I/O Timings: temp read=4.805 write=10.053
+   CTE avg_spend
+     ->  Aggregate  (cost=25502.49..25502.50 rows=1 width=32) (actual time=131.387..133.230 rows=1 loops=1)
+           Buffers: shared hit=10420
+           ->  Finalize HashAggregate  (cost=24825.54..25164.01 rows=27078 width=40) (actual time=122.740..131.802 rows=37812 loops=1)
+                 Group Key: so2.user_id
+                 Batches: 1  Memory Usage: 15889kB
+                 Buffers: shared hit=10420
+                 ->  Gather  (cost=18665.29..24419.37 rows=54156 width=40) (actual time=98.145..105.563 rows=39886 loops=1)
+                       Workers Planned: 2
+                       Workers Launched: 2
+                       Buffers: shared hit=10420
+                       ->  Partial HashAggregate  (cost=17665.29..18003.77 rows=27078 width=40) (actual time=83.880..87.543 rows=13295 loops=3)
+                             Group Key: so2.user_id
+                             Batches: 1  Memory Usage: 5905kB
+                             Buffers: shared hit=10420
+                             Worker 0:  Batches: 1  Memory Usage: 5905kB
+                             Worker 1:  Batches: 1  Memory Usage: 5905kB
+                             ->  Parallel Hash Join  (cost=8975.61..16542.23 rows=224612 width=14) (actual time=28.225..62.405 rows=179805 loops=3)
+                                   Hash Cond: (oi2.order_id = so2.order_id)
+                                   Buffers: shared hit=10420
+                                   ->  Parallel Seq Scan on order_item oi2  (cost=0.00..6910.49 rows=249949 width=14) (actual time=0.004..8.103 rows=199959 loops=3)
+                                         Buffers: shared hit=4411
+                                   ->  Parallel Hash  (cost=7571.50..7571.50 rows=112329 width=16) (actual time=27.514..27.515 rows=89901 loops=3)
+                                         Buckets: 524288  Batches: 1  Memory Usage: 16768kB
+                                         Buffers: shared hit=6009
+                                         ->  Parallel Seq Scan on store_order so2  (cost=0.00..7571.50 rows=112329 width=16) (actual time=4.696..12.562 rows=89901 loops=3)
+                                               Filter: ((status)::text = 'COMPLETED'::text)
+                                               Rows Removed by Filter: 10099
+                                               Buffers: shared hit=6009
+   InitPlan 2 (returns $2)
+     ->  CTE Scan on avg_spend  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.001 rows=1 loops=1)
+   InitPlan 3 (returns $3)
+     ->  CTE Scan on avg_spend avg_spend_1  (cost=0.00..0.02 rows=1 width=32) (actual time=0.000..0.000 rows=1 loops=1)
+   InitPlan 4 (returns $4)
+     ->  CTE Scan on avg_spend avg_spend_2  (cost=0.00..0.02 rows=1 width=32) (actual time=131.390..131.391 rows=1 loops=1)
+           Buffers: shared hit=10420
+   ->  Sort  (cost=97914.85..99262.53 rows=539070 width=55) (actual time=440.403..478.312 rows=539416 loops=1)
+         Sort Key: u.user_id, so.order_id
+         Sort Method: external merge  Disk: 38376kB
+         Buffers: shared hit=11162, temp read=4797 written=4800
+         I/O Timings: temp read=4.805 write=10.053
+         ->  Hash Join  (cost=14767.90..28167.58 rows=539070 width=55) (actual time=88.044..320.596 rows=539416 loops=1)
+               Hash Cond: (so.user_id = u.user_id)
+               Buffers: shared hit=11159
+               ->  Hash Join  (cost=13128.88..25113.36 rows=539070 width=22) (actual time=64.179..214.302 rows=539416 loops=1)
+                     Hash Cond: (oi.order_id = so.order_id)
+                     Buffers: shared hit=10420
+                     ->  Seq Scan on order_item oi  (cost=0.00..10409.78 rows=599878 width=14) (actual time=0.008..22.613 rows=599878 loops=1)
+                           Buffers: shared hit=4411
+                     ->  Hash  (cost=9759.00..9759.00 rows=269590 width=16) (actual time=62.889..62.889 rows=269703 loops=1)
+                           Buckets: 524288  Batches: 1  Memory Usage: 16739kB
+                           Buffers: shared hit=6009
+                           ->  Seq Scan on store_order so  (cost=0.00..9759.00 rows=269590 width=16) (actual time=4.870..27.109 rows=269703 loops=1)
+                                 Filter: ((status)::text = 'COMPLETED'::text)
+                                 Rows Removed by Filter: 30297
+                                 Buffers: shared hit=6009
+               ->  Hash  (cost=1139.01..1139.01 rows=40001 width=41) (actual time=23.687..23.687 rows=40001 loops=1)
+                     Buckets: 65536  Batches: 1  Memory Usage: 3425kB
+                     Buffers: shared hit=739
+                     ->  Seq Scan on app_user u  (cost=0.00..1139.01 rows=40001 width=41) (actual time=15.451..17.988 rows=40001 loops=1)
+                           Buffers: shared hit=739
+ Planning:
+   Buffers: shared hit=500
+ Planning Time: 2.416 ms
+ JIT:
+   Functions: 84
+   Options: Inlining false, Optimization false, Expressions true, Deforming true
+   Timing: Generation 2.705 ms, Inlining 0.000 ms, Optimization 1.157 ms, Emission 26.331 ms, Total 30.193 ms
+ Execution Time: 703.386 ms
+(75 rows)
+

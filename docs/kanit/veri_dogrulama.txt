@@ -1,0 +1,78 @@
+== Satır sayıları ve rapor §8.1 hedefleri
+       tablo       |  satir  |                hedef                
+-------------------+---------+-------------------------------------
+ app_user          |   40001 | 40.000
+ product           |    5000 | 5.000 (≈4.000 ana oyun / 1.000 DLC)
+ base_game         |    4000 | ≈4.000
+ dlc               |    1000 | ≈1.000
+ store_order       |  300000 | 300.000 (≈270.000 tamamlanmış)
+   COMPLETED       |  269703 | ≈270.000
+   PENDING         |   15297 | 
+   CANCELLED       |   15000 | 
+ order_item        |  599878 | ≈600.000
+ payment_attempt   |  351010 | >= 300.000
+   FAILED          |   81307 | 
+ library_entry     |  539416 | ≈540.000
+ play_session      | 1000000 | 1.000.000
+ review            |   80000 | 80.000
+ wishlist          |  150000 | 150.000
+ publisher         |     250 | 
+ developer         |     600 | 
+ genre             |      18 | 
+ product_genre     |    8462 | 
+ product_developer |    6028 | 
+ user_role         |   40002 | 
+
+== İş kuralı denetimleri (ihlal sayısı = 0 beklenir)
+                          kural                          | ihlal | sonuc 
+---------------------------------------------------------+-------+-------
+ BR01 alt türü tam olarak bir olmayan ürün               |     0 | OK
+ §4.2 genre veya developer bağlantısı olmayan ürün       |     0 | OK
+ BR04 kalemsiz sipariş                                   |     0 | OK
+ BR09 COMPLETED ama SUCCESS ödemesi tam olarak bir değil |     0 | OK
+ BR09 COMPLETED olmayan siparişte SUCCESS ödeme          |     0 | OK
+ BR04 ödeme tutarı kalem toplamından farklı              |     0 | OK
+ BR04 tamamlanmış kalem olup kütüphane kaydı olmayan     |     0 | OK
+ BR04 kütüphane kaydı tamamlanmamış siparişten           |     0 | OK
+ BR04 kütüphane kullanıcı/ürün kaynak kalemle tutarsız   |     0 | OK
+ BR02 aynı kullanıcı-ürün için birden fazla sahiplik     |     0 | OK
+ BR05 ana oyunu olmadan DLC sahipliği                    |     0 | OK
+ BR06 DLC üzerinde oynama oturumu                        |     0 | OK
+ BR06 edinimden önce başlayan oturum                     |     0 | OK
+ §5 ended_at < started_at                                |     0 | OK
+ BR06 sahip olunmayan oyuna yorum                        |     0 | OK
+ BR06 puan 1-5 dışında                                   |     0 | OK
+ §5 completed_at < created_at                            |     0 | OK
+
+== BR07 gösterimi: satış fiyatı güncel list_price'tan farklı olan kalemler (bilgi amaçlı)
+ farkli_fiyatli_kalem | yuzde 
+----------------------+-------
+               180370 |  30.1
+
+== data_loader yükleme sonrası yetkisi (false beklenir)
+ store_order_insert | app_user_insert | temp_yetkisi 
+--------------------+-----------------+--------------
+ f                  | f               | f
+
+== Tablo ve indeks boyutları
+       tablo       | tablo_boyutu | indeks_boyutu 
+-------------------+--------------+---------------
+ play_session      | 57 MB        | 59 MB
+ store_order       | 47 MB        | 60 MB
+ order_item        | 35 MB        | 61 MB
+ library_entry     | 39 MB        | 49 MB
+ payment_attempt   | 28 MB        | 38 MB
+ wishlist          | 7680 kB      | 6920 kB
+ review            | 7208 kB      | 4008 kB
+ app_user          | 5944 kB      | 4312 kB
+ user_role         | 1768 kB      | 1512 kB
+ product           | 832 kB       | 336 kB
+ product_genre     | 400 kB       | 632 kB
+ product_developer | 296 kB       | 496 kB
+ base_game         | 296 kB       | 104 kB
+ dlc               | 144 kB       | 88 kB
+ developer         | 72 kB        | 32 kB
+ app_role          | 40 kB        | 32 kB
+ genre             | 40 kB        | 32 kB
+ publisher         | 48 kB        | 16 kB
+
