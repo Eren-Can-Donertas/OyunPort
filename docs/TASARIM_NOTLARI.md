@@ -53,7 +53,6 @@ değiştirilmemiştir; rapordaki 18 tablo birebir uygulanmış, yeni tablo eklen
 - Frontend için tarayıcı tabanlı otomatik E2E test paketi yoktur (bkz. `docs/TEST_SONUCLARI.md` §4).
 - Yük testi ve soğuk önbellek performans ölçümü yapılmamıştır.
 - Seed admin ve sentetik kullanıcı parolaları demo amaçlı sabittir; üretim kullanımı için değiştirilmelidir.
-- Proje klasörü bir git deposu değildir; teslimden önce sürüm kontrolüne alınması önerilir.
 
 ## 5. Kapsam dışı (raporla uyumlu)
 
